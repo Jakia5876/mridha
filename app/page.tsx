@@ -9,6 +9,7 @@ import { ParticleBackground } from '@/components/particle-background'
 import { ContactForm } from '@/components/contact-form'
 import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/scroll-animations'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { WorkflowGallery } from '@/components/workflow-gallery'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -239,6 +240,18 @@ export default function Portfolio() {
               ))}
             </div>
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Workflow Gallery Section */}
+      <section id="workflows" className="relative py-20 px-6 border-t border-slate-800 bg-slate-900/50 z-10">
+        <div className="max-w-7xl mx-auto">
+          <FadeInUp>
+            <h2 className="text-3xl font-semibold mb-4 text-white">Workflow Showcase</h2>
+            <p className="text-slate-400 mb-12">Visual demonstrations of n8n automation workflows in action</p>
+          </FadeInUp>
+          
+          <WorkflowGallery />
         </div>
       </section>
 
