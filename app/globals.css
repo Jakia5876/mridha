@@ -15,22 +15,22 @@
 }
 
 :root {
-  color-scheme: light;
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --accent: #0a0a0a;
-  --border: #e5e5e5;
-  --ring: #0a0a0a;
-  --radius: 0.5rem;
-}
-
-.dark {
   color-scheme: dark;
   --background: #0a0a0a;
   --foreground: #ffffff;
   --accent: #ffffff;
   --border: #2a2a2a;
   --ring: #ffffff;
+  --radius: 0.5rem;
+}
+
+html.light {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --accent: #0a0a0a;
+  --border: #e5e5e5;
+  --ring: #0a0a0a;
 }
 
 @layer base {
@@ -73,6 +73,75 @@
     0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.1); }
     50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.3); }
   }
+}
+
+/* Light mode overrides */
+html.light {
+  background: linear-gradient(to bottom right, #f8f9fa, #f0f4f8) !important;
+}
+
+html.light body {
+  background: transparent;
+}
+
+html.light .bg-gradient-to-br.from-slate-950 {
+  @apply from-slate-50;
+}
+
+html.light .via-slate-900 {
+  @apply via-slate-100;
+}
+
+html.light .to-slate-950 {
+  @apply to-slate-50;
+}
+
+html.light .bg-slate-950 {
+  @apply bg-slate-50;
+}
+
+html.light .bg-slate-900 {
+  @apply bg-slate-100;
+}
+
+html.light .bg-slate-800 {
+  @apply bg-slate-200;
+}
+
+html.light .text-slate-300 {
+  @apply text-slate-700;
+}
+
+html.light .text-slate-400 {
+  @apply text-slate-600;
+}
+
+html.light .border-slate-800 {
+  @apply border-slate-300;
+}
+
+html.light .border-slate-700 {
+  @apply border-slate-400;
+}
+
+html.light .text-white {
+  @apply text-slate-900;
+}
+
+html.light .bg-slate-800\/50 {
+  @apply bg-slate-200/50;
+}
+
+html.light .bg-slate-900\/50 {
+  @apply bg-slate-100/50;
+}
+
+html.light .hover\:bg-slate-800:hover {
+  @apply bg-slate-200;
+}
+
+html.light .hover\:bg-slate-700:hover {
+  @apply bg-slate-300;
 }
 
 /* Print styles */

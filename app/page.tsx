@@ -8,6 +8,7 @@ import { FloatingShapes } from '@/components/floating-shapes'
 import { ParticleBackground } from '@/components/particle-background'
 import { ContactForm } from '@/components/contact-form'
 import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/scroll-animations'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -99,15 +100,18 @@ export default function Portfolio() {
             </motion.div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </motion.button>
+          {/* Theme Toggle and Mobile Menu Button */}
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <motion.button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
+          </div>
         </motion.div>
 
         {/* Mobile Menu */}
