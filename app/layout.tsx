@@ -6,9 +6,31 @@ import './globals.css'
 const dmSans = DM_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
-  description: 'Modern minimal portfolio',
+  title: 'Abdul Alim Mridha - n8n Automation Specialist | Portfolio',
+  description: 'Professional n8n automation specialist. Build intelligent workflows, AI-powered email systems, social media automation, and custom integrations without code.',
+  keywords: ['n8n automation', 'workflow automation', 'email automation', 'AI integration', 'social media automation', 'no-code automation'],
   generator: 'v0.app',
+  authors: [{ name: 'Abdul Alim Mridha' }],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://abdulalim.dev',
+    title: 'Abdul Alim Mridha - n8n Automation Specialist',
+    description: 'Transform your business with intelligent n8n automation workflows',
+    images: [
+      {
+        url: '/alim.png',
+        width: 1200,
+        height: 630,
+        alt: 'Abdul Alim Mridha',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Abdul Alim Mridha - n8n Automation Specialist',
+    description: 'Transform your business with intelligent n8n automation workflows',
+  },
   icons: {
     icon: [
       {
@@ -29,11 +51,14 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
+  colorScheme: 'dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1729' },
   ],
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 }
 
 export default function RootLayout({
@@ -42,7 +67,23 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Abdul Alim Mridha',
+              url: 'https://abdulalim.dev',
+              image: 'https://abdulalim.dev/alim.png',
+              jobTitle: 'n8n Automation Specialist',
+              description: 'Professional n8n automation specialist building intelligent workflows and AI-powered solutions',
+            }),
+          }}
+        />
+      </head>
       <body className={`${dmSans.className} antialiased text-foreground`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
