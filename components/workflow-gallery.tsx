@@ -60,14 +60,15 @@ export function WorkflowGallery() {
           >
             <div className="relative overflow-hidden rounded-lg bg-slate-800/50 backdrop-blur-xl border border-slate-700 hover:border-cyan-500/50 transition-all">
               <motion.div
-                className="relative h-64 overflow-hidden"
+                className="relative w-full aspect-video overflow-hidden bg-slate-900"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <img
                   src={workflow.image}
                   alt={workflow.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-2"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
@@ -118,11 +119,11 @@ export function WorkflowGallery() {
                 <X size={24} className="text-white" />
               </button>
 
-              <div className="max-h-[80vh] overflow-auto">
+              <div className="max-h-[80vh] overflow-auto flex items-center justify-center bg-slate-950 p-4">
                 <img
                   src={workflows.find(w => w.id === selectedId)?.image}
                   alt="workflow"
-                  className="w-full h-auto"
+                  className="max-w-full max-h-full w-auto h-auto object-contain"
                 />
               </div>
 
