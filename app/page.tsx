@@ -117,23 +117,40 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-sm text-slate-400 mb-6">Welcome to my portfolio</p>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 leading-tight">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">n8n Automation</span>
-            <br />
-            <span className="text-white">Specialist</span>
-          </h1>
-          <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">
-            I build intelligent automation workflows that transform your business. From AI-powered email systems to multi-channel customer automation, I deliver results without code using n8n.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-10">
-            <a href="#contact" className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all inline-block text-center">
-              Get Started
-            </a>
-            <a href="#work" className="px-8 py-3 border border-slate-600 text-white font-semibold rounded-lg hover:bg-slate-800 transition-all inline-block text-center">
-              View Projects
-            </a>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div>
+              <p className="text-sm text-slate-400 mb-6">Welcome to my portfolio</p>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 leading-tight">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">n8n Automation</span>
+                <br />
+                <span className="text-white">Specialist</span>
+              </h1>
+              <p className="text-lg text-slate-300 leading-relaxed mb-8">
+                I build intelligent automation workflows that transform your business. From AI-powered email systems to multi-channel customer automation, I deliver results without code using n8n.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a href="#contact" className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all inline-block text-center">
+                  Get Started
+                </a>
+                <a href="#work" className="px-8 py-3 border border-slate-600 text-white font-semibold rounded-lg hover:bg-slate-800 transition-all inline-block text-center">
+                  View Projects
+                </a>
+              </div>
+            </div>
+
+            {/* Right Image */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full blur-2xl opacity-20" />
+                <img
+                  src="/alim.png"
+                  alt="Abdul Alim Mridha"
+                  className="relative w-80 h-80 rounded-full object-cover border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
