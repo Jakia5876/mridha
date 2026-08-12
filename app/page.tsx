@@ -10,6 +10,7 @@ import { ContactForm } from '@/components/contact-form'
 import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/scroll-animations'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { WorkflowGallery } from '@/components/workflow-gallery'
+import { CaseStudies } from '@/components/case-studies'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -90,8 +91,8 @@ export default function Portfolio() {
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Link href="#work" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
-                Portfolio
+              <Link href="#case-studies" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
+                Case Studies
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }}>
@@ -127,11 +128,11 @@ export default function Portfolio() {
                 Services
               </Link>
               <Link
-                href="#work"
+                href="#case-studies"
                 className="text-sm text-slate-300 hover:text-cyan-400 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Portfolio
+                Case Studies
               </Link>
               <Link
                 href="#contact"
@@ -240,6 +241,18 @@ export default function Portfolio() {
               ))}
             </div>
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Case Studies Section */}
+      <section id="case-studies" className="relative z-10 border-t border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <FadeInUp>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Selected case studies</p>
+            <h2 className="mb-4 text-3xl font-semibold text-white md:text-4xl">Automation that solves real business problems</h2>
+            <p className="mb-12 max-w-2xl text-slate-400">Explore the challenge, approach, and outcome behind Abdul&apos;s n8n automation work.</p>
+          </FadeInUp>
+          <CaseStudies />
         </div>
       </section>
 
