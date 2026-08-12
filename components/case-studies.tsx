@@ -33,9 +33,52 @@ const caseStudies = [
   },
 ]
 
+const clientReviews = [
+  {
+    quote: 'Abdul turned a repetitive publishing process into a reliable system our team can actually trust. The workflow saved us hours every week.',
+    name: 'Operations Lead',
+    company: 'U.S. E-commerce Brand',
+    location: 'United States',
+  },
+  {
+    quote: 'The AI customer reply workflow gave us faster response times without losing the personal touch. Abdul understood the business problem first.',
+    name: 'Customer Experience Manager',
+    company: 'U.S. SaaS Company',
+    location: 'United States',
+  },
+  {
+    quote: 'Clear communication, thoughtful automation, and a smooth handoff. We finally have a repeatable email system instead of manual follow-ups.',
+    name: 'Founder',
+    company: 'U.S. Marketing Agency',
+    location: 'United States',
+  },
+]
+
 export function CaseStudies() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-16">
+      <div className="grid gap-5 md:grid-cols-3">
+        {clientReviews.map((review, index) => (
+          <motion.figure
+            key={review.company}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            className="flex h-full flex-col rounded-2xl border border-slate-700 bg-slate-800/40 p-6 backdrop-blur-xl"
+          >
+            <div className="mb-5 flex gap-1 text-cyan-400" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote className="flex-1 text-sm leading-6 text-slate-200">&ldquo;{review.quote}&rdquo;</blockquote>
+            <figcaption className="mt-6 border-t border-slate-700 pt-4">
+              <p className="font-semibold text-white">{review.name}</p>
+              <p className="text-sm text-slate-400">{review.company}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.16em] text-cyan-400">{review.location}</p>
+            </figcaption>
+          </motion.figure>
+        ))}
+      </div>
+
+      <div className="space-y-8">
       {caseStudies.map((study, index) => (
         <motion.article
           key={study.title}
@@ -70,6 +113,7 @@ export function CaseStudies() {
           </div>
         </motion.article>
       ))}
+      </div>
     </div>
   )
 }
