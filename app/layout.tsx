@@ -5,18 +5,38 @@ import './globals.css'
 
 const dmSans = DM_Sans({ subsets: ['latin'] })
 
+const siteUrl = 'https://www.abdulalimmridha.top'
+const siteTitle = 'Abdul Alim Mridha - AI Automation, GoHighLevel CRM & Vibe Coding Specialist'
+const siteDescription =
+  'Abdul Alim Mridha builds n8n workflow automation, GoHighLevel CRM systems, AI chatbots, and modern vibe-coded websites that save businesses time and grow revenue.'
+
 export const metadata: Metadata = {
-  title: 'Abdul Alim Mridha - n8n Automation Specialist | Portfolio',
-  description: 'Professional n8n automation specialist. Build intelligent workflows, AI-powered email systems, social media automation, and custom integrations without code.',
-  keywords: ['n8n automation', 'workflow automation', 'email automation', 'AI integration', 'social media automation', 'no-code automation'],
-  generator: 'v0.app',
-  authors: [{ name: 'Abdul Alim Mridha' }],
+  metadataBase: new URL(siteUrl),
+  title: `${siteTitle} | Portfolio`,
+  description: siteDescription,
+  keywords: [
+    'n8n automation',
+    'GoHighLevel',
+    'GoHighLevel CRM',
+    'GoHighLevel automation',
+    'GHL expert',
+    'vibe coding',
+    'AI automation',
+    'workflow automation',
+    'AI chatbot',
+    'email automation',
+    'SMS automation',
+    'Next.js website',
+  ],
+  authors: [{ name: 'Abdul Alim Mridha', url: siteUrl }],
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://abdulalim.dev',
-    title: 'Abdul Alim Mridha - n8n Automation Specialist',
-    description: 'Transform your business with intelligent n8n automation workflows',
+    url: siteUrl,
+    siteName: 'Abdul Alim Mridha',
+    title: siteTitle,
+    description: siteDescription,
     images: [
       {
         url: '/alim.png',
@@ -28,8 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Abdul Alim Mridha - n8n Automation Specialist',
-    description: 'Transform your business with intelligent n8n automation workflows',
+    title: siteTitle,
+    description: siteDescription,
   },
   icons: {
     icon: [
@@ -76,10 +96,12 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Person',
               name: 'Abdul Alim Mridha',
-              url: 'https://abdulalim.dev',
-              image: 'https://abdulalim.dev/alim.png',
-              jobTitle: 'n8n Automation Specialist',
-              description: 'Professional n8n automation specialist building intelligent workflows and AI-powered solutions',
+              url: siteUrl,
+              image: `${siteUrl}/alim.png`,
+              jobTitle: 'AI Automation, GoHighLevel CRM & Vibe Coding Specialist',
+              description: siteDescription,
+              email: 'mailto:alim01716779220@gmail.com',
+              knowsAbout: ['n8n', 'GoHighLevel', 'CRM Automation', 'Vibe Coding', 'AI Agents', 'Next.js', 'Workflow Automation'],
             }),
           }}
         />

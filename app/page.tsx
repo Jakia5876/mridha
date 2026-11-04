@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Mail, Phone } from 'lucide-react'
+import { Menu, X, Mail, Phone, Workflow, Users, Target, Code, Bot, Share2, TrendingUp, ShoppingCart } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { FloatingShapes } from '@/components/floating-shapes'
 import { ParticleBackground } from '@/components/particle-background'
@@ -11,6 +11,7 @@ import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from
 import { ThemeToggle } from '@/components/theme-toggle'
 import { WorkflowGallery } from '@/components/workflow-gallery'
 import { CaseStudies } from '@/components/case-studies'
+import { SkillsSection } from '@/components/skills-section'
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -55,12 +56,59 @@ export default function Portfolio() {
   ]
 
   const services = [
-    'Social Media Automation',
-    'Email Automation',
-    'AI Chat Integration',
-    'Sales Connector',
-    'Lead Generation',
-    'WooCommerce Automation',
+    {
+      title: 'n8n Workflow Automation',
+      icon: Workflow,
+      description: 'Custom n8n workflows that connect your apps, sync data, and eliminate repetitive manual tasks.',
+    },
+    {
+      title: 'GoHighLevel CRM Setup',
+      icon: Users,
+      description: 'Full GoHighLevel account setup: pipelines, contacts, custom fields, calendars, and snapshots.',
+    },
+    {
+      title: 'GoHighLevel Automation & Funnels',
+      icon: Target,
+      description: 'Lead-nurturing workflows, high-converting funnels, and follow-up sequences that run on autopilot.',
+    },
+    {
+      title: 'Vibe-Coded Websites & Apps',
+      icon: Code,
+      description: 'Modern, fast websites and web apps built with AI-assisted development using Next.js and Vercel.',
+    },
+    {
+      title: 'AI Chatbots & Agents',
+      icon: Bot,
+      description: 'AI agents that answer customer questions 24/7 using your own knowledge base.',
+    },
+    {
+      title: 'Email & SMS Automation',
+      icon: Mail,
+      description: 'Automated email and SMS campaigns, smart replies, and reliable SMTP delivery setup.',
+    },
+    {
+      title: 'Social Media Automation',
+      icon: Share2,
+      description: 'Scheduled, AI-generated posts and images published automatically to your social channels.',
+    },
+    {
+      title: 'Lead Generation & Sales Pipelines',
+      icon: TrendingUp,
+      description: 'Capture, qualify, and route leads into your CRM so your sales team never misses an opportunity.',
+    },
+    {
+      title: 'E-commerce Automation',
+      icon: ShoppingCart,
+      description: 'WooCommerce and WordPress automation for product uploads, multi-store sync, and order workflows.',
+    },
+  ]
+
+  const navLinks = [
+    { href: '#services', label: 'Services' },
+    { href: '#skills', label: 'Skills' },
+    { href: '#case-studies', label: 'Case Studies' },
+    { href: '#work', label: 'Projects' },
+    { href: '#contact', label: 'Contact' },
   ]
 
   return (
@@ -84,22 +132,14 @@ export default function Portfolio() {
           </motion.div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-12">
-            <motion.div whileHover={{ scale: 1.05 }}>
-              <Link href="#services" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
-                Services
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }}>
-              <Link href="#case-studies" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
-                Case Studies
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }}>
-              <Link href="#contact" className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
-                Contact
-              </Link>
-            </motion.div>
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <motion.div key={link.href} whileHover={{ scale: 1.05 }}>
+                <Link href={link.href} className="text-sm text-slate-300 hover:text-cyan-400 transition-colors pb-2 border-b border-transparent hover:border-cyan-400">
+                  {link.label}
+                </Link>
+              </motion.div>
+            ))}
           </div>
 
           {/* Theme Toggle and Mobile Menu Button */}
@@ -120,27 +160,16 @@ export default function Portfolio() {
         {isMenuOpen && (
           <div className="md:hidden border-t border-slate-800 bg-slate-950">
             <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4">
-              <Link
-                href="#services"
-                className="text-sm text-slate-300 hover:text-cyan-400 transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Services
-              </Link>
-              <Link
-                href="#case-studies"
-                className="text-sm text-slate-300 hover:text-cyan-400 transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Case Studies
-              </Link>
-              <Link
-                href="#contact"
-                className="text-sm text-slate-300 hover:text-cyan-400 transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-slate-300 hover:text-cyan-400 transition-colors py-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         )}
@@ -152,15 +181,25 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <FadeInLeft duration={0.8}>
-              <p className="text-sm text-slate-400 mb-6">Welcome to my portfolio</p>
+              <p className="text-sm text-slate-400 mb-6">Hi, I&apos;m Abdul Alim Mridha</p>
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-pulse">n8n Automation</span>
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">AI Automation</span>
                 <br />
-                <span className="text-white">Specialist</span>
+                <span className="text-white">&amp; Vibe Coding Specialist</span>
               </h1>
-              <p className="text-lg text-slate-300 leading-relaxed mb-8">
-                I build intelligent automation workflows that transform your business. From AI-powered email systems to multi-channel customer automation, I deliver results without code using n8n.
+              <p className="text-lg text-slate-300 leading-relaxed mb-6">
+                I help businesses save time and grow revenue with n8n workflow automation, GoHighLevel CRM systems, AI chatbots, and modern websites built through vibe coding.
               </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {['n8n', 'GoHighLevel CRM', 'Vibe Coding', 'AI Agents'].map((badge) => (
+                  <span
+                    key={badge}
+                    className="text-xs px-3 py-1 bg-slate-800/70 text-cyan-300 rounded-full border border-cyan-500/30"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <motion.a 
                   href="#contact" 
@@ -211,15 +250,15 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto">
           <FadeInUp>
             <h2 className="text-3xl font-semibold mb-4 text-white">Services</h2>
-            <p className="text-slate-400 mb-12 max-w-2xl">Comprehensive automation solutions powered by n8n</p>
+            <p className="text-slate-400 mb-12 max-w-2xl">Automation, CRM, AI, and web development services that help your business run smarter</p>
           </FadeInUp>
-          
+
           <StaggerContainer>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, index) => (
-                <StaggerItem key={index}>
+              {services.map((service) => (
+                <StaggerItem key={service.title}>
                   <motion.div
-                    className="bg-slate-800/50 backdrop-blur-xl border border-slate-700 rounded-lg p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10"
+                    className="h-full bg-slate-800/50 backdrop-blur-xl border border-slate-700 rounded-lg p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10"
                     whileHover={{ 
                       scale: 1.05, 
                       borderColor: '#06b6d4',
@@ -227,15 +266,11 @@ export default function Portfolio() {
                     }}
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
-                    <motion.div 
-                      className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg mb-4 flex items-center justify-center"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                    >
-                      <span className="text-white text-lg font-bold">✓</span>
-                    </motion.div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{service}</h3>
-                    <p className="text-slate-400 text-sm">Streamline your workflows with automated solutions</p>
+                    <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg mb-4 flex items-center justify-center">
+                      <service.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white mb-2">{service.title}</h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
                   </motion.div>
                 </StaggerItem>
               ))}
@@ -243,6 +278,9 @@ export default function Portfolio() {
           </StaggerContainer>
         </div>
       </section>
+
+      {/* Skills Section */}
+      <SkillsSection />
 
       {/* Case Studies Section */}
       <section id="case-studies" className="relative z-10 border-t border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-6 py-20">
@@ -273,7 +311,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto">
           <FadeInUp>
             <h2 className="text-3xl font-semibold mb-4 text-white">Recent Projects</h2>
-            <p className="text-slate-400 mb-12">Real-world automation solutions delivered with n8n</p>
+            <p className="text-slate-400 mb-12">Real-world automation solutions built and delivered for clients</p>
           </FadeInUp>
           
           <StaggerContainer delay={0.1}>
@@ -331,7 +369,7 @@ export default function Portfolio() {
           <FadeInUp>
             <h2 className="text-3xl font-semibold mb-6 text-white text-center">Let&apos;s Automate Your Business</h2>
             <p className="text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed text-center">
-              Ready to transform your workflows with n8n automation? Get in touch to discuss your automation needs.
+              Need an n8n workflow, a GoHighLevel CRM setup, an AI chatbot, or a new website? Tell me about your project and let&apos;s build it together.
             </p>
           </FadeInUp>
           
@@ -393,11 +431,11 @@ export default function Portfolio() {
               whileHover={{ scale: 1.05 }}
             >
               <p className="font-semibold text-white">Abdul Alim Mridha</p>
-              <p className="text-sm">n8n Automation Specialist</p>
+              <p className="text-sm">AI Automation, GoHighLevel CRM &amp; Vibe Coding Specialist</p>
             </motion.div>
-            
+
             <div className="text-slate-400 text-sm">
-              © 2025 Abdul Alim Mridha. All rights reserved.
+              © {new Date().getFullYear()} Abdul Alim Mridha. All rights reserved.
             </div>
           </div>
         </motion.div>
