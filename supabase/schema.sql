@@ -89,3 +89,24 @@ create policy "media admin update" on storage.objects
 drop policy if exists "media admin delete" on storage.objects;
 create policy "media admin delete" on storage.objects
   for delete to authenticated using (bucket_id = 'media' and public.is_admin());
+
+-- ---------- block sign-ups: only emails in public.admins can get an account ----------
+create or replace function public.block_non_admin_signup()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if not exists (select 1 from public.admins where lower(email) = lower(new.email)) then
+    raise exception 'Sign ups are disabled for this site';
+  end if;
+  return new;
+end;
+$$;
+revoke execute on function public.block_non_admin_signup() from public, anon, authenticated;
+
+drop trigger if exists block_non_admin_signup on auth.users;
+create trigger block_non_admin_signup
+  before insert on auth.users
+  for each row execute function public.block_non_admin_signup();
