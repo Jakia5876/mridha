@@ -5,25 +5,22 @@ import { motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
 
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    // Check localStorage for saved preference
-    // Default to the white (light) design; use dark only if the visitor chose it
-    const isLight = localStorage.getItem('theme') !== 'dark'
-    setIsDark(!isLight)
-    document.documentElement.classList.toggle('light', isLight)
+    // Always start on the white (light) design; clear any old saved "dark" choice
+    localStorage.removeItem("theme")
+    setIsDark(false)
+    document.documentElement.classList.add("light")
   }, [])
 
   const toggleTheme = () => {
     const newIsDark = !isDark
     setIsDark(newIsDark)
     
-    // Save preference
-    localStorage.setItem('theme', newIsDark ? 'dark' : 'light')
-    
+    // Dark mode applies to this visit only; the next visit opens white again
     // Update DOM
     document.documentElement.classList.toggle('light', !newIsDark)
     
