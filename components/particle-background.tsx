@@ -69,9 +69,10 @@ export function ParticleBackground() {
     }
 
     // Animation loop
+    let frameId = 0
     const animate = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)' // semi-transparent slate background
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // Clear each frame so the canvas never builds up a tint over the page
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.globalAlpha = 1
 
       particles.forEach((particle) => {
@@ -99,12 +100,13 @@ export function ParticleBackground() {
         }
       }
 
-      requestAnimationFrame(animate)
+      frameId = requestAnimationFrame(animate)
     }
 
     animate()
 
     return () => {
+      cancelAnimationFrame(frameId)
       window.removeEventListener('resize', setCanvasSize)
     }
   }, [])

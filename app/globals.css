@@ -75,73 +75,101 @@ html.light {
   }
 }
 
-/* Light mode overrides */
-html.light {
-  background: linear-gradient(to bottom right, #f8f9fa, #f0f4f8) !important;
-}
-
+/* Light (white) theme - default. Unlayered so it overrides Tailwind utilities. */
+html.light,
 html.light body {
-  background: transparent;
+  background: #ffffff !important;
+  color: #0f172a;
 }
 
-html.light .bg-gradient-to-br.from-slate-950 {
-  @apply from-slate-50;
+/* Page and section backgrounds: white */
+html.light .min-h-screen.bg-gradient-to-br,
+html.light section.bg-gradient-to-br,
+html.light section.bg-slate-900\/50 {
+  background: #ffffff !important;
 }
 
-html.light .via-slate-900 {
-  @apply via-slate-100;
+/* Navigation */
+html.light nav.bg-slate-950\/80 {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+html.light .md\:hidden.bg-slate-950 {
+  background: #ffffff !important;
 }
 
-html.light .to-slate-950 {
-  @apply to-slate-50;
+/* Cards, inputs and panels: light gray */
+html.light .bg-slate-800\/30,
+html.light .bg-slate-800\/40,
+html.light .bg-slate-800\/50,
+html.light .bg-slate-800\/70 {
+  background: #f8fafc !important;
 }
-
+html.light .bg-slate-700\/50,
+html.light .bg-slate-900,
 html.light .bg-slate-950 {
-  @apply bg-slate-50;
+  background: #f1f5f9 !important;
 }
-
-html.light .bg-slate-900 {
-  @apply bg-slate-100;
-}
-
 html.light .bg-slate-800 {
-  @apply bg-slate-200;
+  background: #e2e8f0 !important;
 }
-
-html.light .text-slate-300 {
-  @apply text-slate-700;
-}
-
-html.light .text-slate-400 {
-  @apply text-slate-600;
-}
-
-html.light .border-slate-800 {
-  @apply border-slate-300;
-}
-
-html.light .border-slate-700 {
-  @apply border-slate-400;
-}
-
-html.light .text-white {
-  @apply text-slate-900;
-}
-
-html.light .bg-slate-800\/50 {
-  @apply bg-slate-200/50;
-}
-
-html.light .bg-slate-900\/50 {
-  @apply bg-slate-100/50;
-}
-
 html.light .hover\:bg-slate-800:hover {
-  @apply bg-slate-200;
+  background: #f1f5f9 !important;
 }
 
-html.light .hover\:bg-slate-700:hover {
-  @apply bg-slate-300;
+/* Borders */
+html.light .border-slate-800,
+html.light .border-slate-800\/50,
+html.light .border-slate-700 {
+  border-color: #e2e8f0 !important;
+}
+html.light .border-slate-600 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Text */
+html.light .text-white {
+  color: #0f172a !important;
+}
+html.light .text-slate-200,
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+html.light .text-slate-400 {
+  color: #475569 !important;
+}
+html.light .text-cyan-400,
+html.light .hover\:text-cyan-400:hover,
+html.light .group:hover .group-hover\:text-cyan-400 {
+  color: #0891b2 !important;
+}
+html.light .text-cyan-300 {
+  color: #0e7490 !important;
+}
+html.light .text-red-300 {
+  color: #b91c1c !important;
+}
+html.light .placeholder-slate-500::placeholder {
+  color: #94a3b8;
+}
+
+/* Keep white text on the blue gradient buttons and icon tiles */
+html.light .from-cyan-500.text-white,
+html.light .from-cyan-500 .text-white {
+  color: #ffffff !important;
+}
+
+/* Softer image hover overlay on white */
+html.light .bg-gradient-to-t.from-slate-950 {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.15), transparent) !important;
+}
+
+/* Theme toggle: light gray in both themes */
+html .theme-toggle {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+html .theme-toggle:hover {
+  background: #cbd5e1 !important;
 }
 
 /* Print styles */
