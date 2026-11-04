@@ -11,8 +11,8 @@ export function ThemeToggle() {
   useEffect(() => {
     setMounted(true)
     // Check localStorage for saved preference
-    // Default to the dark design; use light only if the visitor chose it
-    const isLight = localStorage.getItem('theme') === 'light'
+    // Default to the white (light) design; use dark only if the visitor chose it
+    const isLight = localStorage.getItem('theme') !== 'dark'
     setIsDark(!isLight)
     document.documentElement.classList.toggle('light', isLight)
   }, [])
@@ -40,7 +40,7 @@ export function ThemeToggle() {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="p-2 rounded-lg border border-slate-700 bg-slate-800/50 hover:bg-slate-700 transition-all"
+      className="theme-toggle p-2 rounded-lg border border-slate-300 bg-slate-200 hover:bg-slate-300 transition-all"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       aria-label="Toggle theme"
@@ -50,9 +50,9 @@ export function ThemeToggle() {
         transition={{ duration: 0.3 }}
       >
         {isDark ? (
-          <Moon size={20} className="text-cyan-400" />
+          <Moon size={20} className="text-slate-600" />
         ) : (
-          <Sun size={20} className="text-yellow-400" />
+          <Sun size={20} className="text-slate-600" />
         )}
       </motion.div>
     </motion.button>
