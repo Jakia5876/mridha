@@ -58,7 +58,7 @@ export const portfolioData: Portfolio = {
     fullName: 'Abdul Alim Mridha',
     role: 'AI Automation & Vibe Coding Specialist',
     heroWord: 'AUTOMATOR',
-    disciplines: ['n8n Automation', 'GoHighLevel CRM', 'Vibe Coding'],
+    disciplines: ['AI Automation', 'GoHighLevel CRM', 'Vibe Coding'],
     intro:
       'I help businesses save time and grow revenue with n8n workflow automation, GoHighLevel CRM systems, AI chatbots and vibe-coded websites.',
     about:
@@ -79,7 +79,7 @@ export const portfolioData: Portfolio = {
     },
     // ফোন মকআপে দেখানো স্কিল বার
     meters: [
-      { label: 'n8n Automation', value: 96 },
+      { label: 'AI Automation', value: 96 },
       { label: 'GoHighLevel', value: 92 },
       { label: 'Vibe Coding', value: 90 },
     ],
@@ -87,7 +87,7 @@ export const portfolioData: Portfolio = {
 
   // হিরো সেকশনের বাম পাশের স্লাইডিং কার্ড
   highlights: [
-    { kicker: 'Specialist', title: 'n8n Automation', caption: 'Custom workflows, webhooks & API integrations.' },
+    { kicker: 'Specialist', title: 'AI Automation', caption: 'Custom workflows, webhooks & API integrations.' },
     { kicker: 'Expert', title: 'GoHighLevel CRM', caption: 'Pipelines, funnels, snapshots & follow-ups.' },
     { kicker: 'Builder', title: 'Vibe Coding', caption: 'Next.js websites built with Claude Code & v0.' },
   ],

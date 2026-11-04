@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   title: `${siteTitle} | Portfolio`,
   description: siteDescription,
   keywords: [
-    'n8n automation',
     'GoHighLevel',
     'GoHighLevel CRM',
     'GoHighLevel automation',
