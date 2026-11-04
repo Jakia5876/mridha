@@ -1,15 +1,14 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
 /**
- * Public Supabase settings. The anon key is designed to be public — every
+ * Public Supabase settings. The publishable key is designed to be public — every
  * visitor's browser receives it. Data is protected by Row Level Security
  * policies in supabase/schema.sql (only admins can edit content or read messages).
- * NEVER put the service_role / secret key in this project.
+ * NEVER put a secret / service_role key in this project.
  */
 export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dyumqsvgccujcwiepzsh.supabase.co'
 export const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5dW1xc3ZnY2N1amN3aWVwenNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4MDEzNTQsImV4cCI6MjEwOTM3NzM1NH0.m-Bl5X9I4KpA1pexC9mQnlyJopshZfVZqO9eWJpwAso'
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_9lyr1YvWPLlPyAxBK0zjDQ_q4BbBAb1'
 
 export const MEDIA_BUCKET = 'media'
 export const CONTENT_ID = 'main'

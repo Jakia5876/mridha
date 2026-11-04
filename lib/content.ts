@@ -23,7 +23,7 @@ export function withDefaults(data: Partial<Portfolio> | null | undefined): Portf
 export async function getPortfolio(): Promise<Portfolio> {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/site_content?id=eq.${CONTENT_ID}&select=data`, {
-      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+      headers: { apikey: SUPABASE_ANON_KEY },
       next: { revalidate: 300 },
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
