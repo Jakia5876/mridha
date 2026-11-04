@@ -15,3 +15,9 @@ node_modules
 .DS_Store
 # TypeScript build cache
 *.tsbuildinfo
+
+# Private notes / secrets — never commit
+credentials.md
+*.secret
+.env
+

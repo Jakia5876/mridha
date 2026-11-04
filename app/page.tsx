@@ -6,6 +6,10 @@ import { Effects } from '@/components/site/effects'
 import { ContactForm } from '@/components/site/contact-form'
 import { Socials } from '@/components/site/socials'
 
+// Re-check Supabase for new content at most every 5 minutes
+// (saving in /admin refreshes the page immediately).
+export const revalidate = 300
+
 const pad = (n: number) => String(n).padStart(2, '0')
 
 function Tags({ items }: { items: string[] }) {
