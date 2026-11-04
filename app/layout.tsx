@@ -1,9 +1,11 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans } from 'next/font/google'
+import { Anton, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const dmSans = DM_Sans({ subsets: ['latin'] })
+const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--font-anton', display: 'swap' })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono-jb', display: 'swap' })
 
 const siteUrl = 'https://www.abdulalimmridha.top'
 const siteTitle = 'Abdul Alim Mridha - AI Automation, GoHighLevel CRM & Vibe Coding Specialist'
@@ -71,8 +73,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#ffffff',
+  colorScheme: 'dark',
+  themeColor: '#050505',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -85,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth light">
+    <html lang="en" className={`${anton.variable} ${inter.variable} ${mono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -104,7 +106,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${dmSans.className} antialiased text-foreground`}>
+      <body>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
