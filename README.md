@@ -1,33 +1,19 @@
-# mridha
+# Abdul Alim Mridha — Portfolio
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+## ফাইলগুলো
+| ফাইল | কাজ |
+|---|---|
+| `data.js` | **সব কন্টেন্ট** (নাম, সার্ভিস, প্রজেক্ট, স্কিল, টেস্টিমোনিয়াল, সোশ্যাল লিংক) |
+| `index.html` | পেজের কাঠামো |
+| `style.css` | ডিজাইন (রঙ বদলাতে উপরের `--accent` এডিট করুন) |
+| `main.js` | `data.js` থেকে কন্টেন্ট পেজে বসায়, অ্যানিমেশন |
+| `assets/` | ছবি, CV |
 
-## Built with v0
+## কীভাবে আপডেট করবেন
+1. `data.js` খুলুন।
+2. নতুন প্রজেক্ট যোগ করতে `projects` লিস্টে একটা `{ ... }` ব্লক কপি করে নিচে পেস্ট করুন, লেখা বদলান।
+3. ছবি `assets/` ফোল্ডারে রাখুন, `image: "assets/নাম.jpg"` লিখুন।
+4. সেভ করে `index.html` ব্রাউজারে খুলে দেখুন।
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
-
-[Continue working on v0 →](https://v0.app/chat/projects/prj_1fnrXg9IoGjKNilBktpD8m0d79od)
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+## লাইভ করা
+ফোল্ডারটা GitHub-এ পুশ করে Vercel / Netlify / Cloudflare Pages-এ কানেক্ট করুন — কোনো build command লাগবে না।
