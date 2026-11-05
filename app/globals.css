@@ -557,3 +557,46 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 1100px) { .sites { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .sites { grid-template-columns: 1fr; } .site.featured { grid-column: auto; } .site.featured .site-shot { aspect-ratio: 16 / 10; } }
 .af select { width: 100%; font: inherit; font-size: 15px; color: var(--text); background: #0f0f0f; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; outline: none; }
+
+/* ============ TOP NAV BAR (desktop) ============ */
+.header { gap: 20px; }
+.topnav {
+  display: none; align-items: center; gap: 2px; padding: 5px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: rgba(10,10,10,.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.topnav a {
+  position: relative; padding: 8px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 500;
+  color: var(--muted); white-space: nowrap; transition: color .25s, background .3s var(--ease);
+}
+.topnav a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+.topnav a.on { color: #000; background: var(--text); }
+.topnav a:focus-visible, .burger:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (min-width: 920px) {
+  .topnav { display: flex; }
+  .burger { display: none; }
+  .menu { display: none; }
+  .logo { color: var(--text); }
+}
+/* medium screens: the "Contact" link replaces the CTA button to make room */
+@media (min-width: 920px) and (max-width: 1279px) {
+  .header-cta { display: none; }
+  .topnav a { padding: 8px 12px; font-size: 13px; }
+}
+
+/* ============ FULLSCREEN MENU (mobile/tablet) — fit all items ============ */
+.menu { padding: 96px var(--pad) 32px; overflow-y: auto; justify-content: flex-start; }
+.menu-list { margin: auto 0; }
+.menu-list a {
+  align-items: center; gap: 18px;
+  font-size: clamp(34px, min(9vw, 8.2vh), 92px); line-height: 1.08;
+}
+.menu-list a span { min-width: 2.6em; }
+.menu-foot { margin-top: 28px; }
+/* ============ HERO: never wider than the screen ============ */
+@media (min-width: 861px) {
+  .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr); }
+  .hero-word { font-size: clamp(48px, 6.6vw, 150px); max-width: 100%; }
+  .disciplines { max-width: 100%; }
+}
