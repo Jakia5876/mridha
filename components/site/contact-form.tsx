@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import { getBrowserSupabase } from '@/lib/supabase'
 import type { SiteText } from '@/lib/portfolio-data'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
@@ -19,18 +18,27 @@ export function ContactForm({ email, text: t }: { email: string; text: SiteText[
     const from = String(f.get('email') || '').trim()
     const subject = String(f.get('subject') || '').trim()
     const message = String(f.get('message') || '').trim()
-    if (f.get('website')) return // honeypot: bots fill hidden fields
-
     if (!name || !from || !message) return setError('Please fill in name, email and message.')
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from)) return setError('Please enter a valid email address.')
 
     setError('')
     setStatus('sending')
-    const { error: dbError } = await getBrowserSupabase()
-      .from('messages')
-      .insert({ name: name.slice(0, 200), email: from.slice(0, 320), subject: subject.slice(0, 300) || null, message: message.slice(0, 5000) })
+    let res: Response | null = null
+    try {
+      res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email: from, subject, message, website: f.get('website') || '' }),
+      })
+    } catch {}
 
-    if (dbError) {
+    // validation / rate-limit problems: show the message, keep what they typed
+    if (res && (res.status === 400 || res.status === 429)) {
+      const j = (await res.json().catch(() => ({}))) as { error?: string }
+      setStatus('error')
+      return setError(j.error || 'Please check the form and try again.')
+    }
+    if (!res?.ok) {
       setStatus('error')
       setError('Could not send right now — opening your email app instead.')
       const body = `${message}\n\n— ${name} (${from})`

@@ -66,6 +66,11 @@ export type SiteText = {
   testimonials: { pill: string; heading: string }
   contact: { pill: string; heading: string; name: string; email: string; subject: string; message: string; button: string; sending: string; success: string }
   footer: { backToTop: string }
+  /** Contact-form emails. {name} and {subject} are replaced with the visitor's values. */
+  emails: {
+    notifyTo: string; fromName: string; notifySubject: string
+    confirmSubject: string; confirmHeading: string; confirmBody: string; signature: string
+  }
 }
 
 export const defaultSiteText: SiteText = {
@@ -102,6 +107,16 @@ export const defaultSiteText: SiteText = {
     button: 'Start Project', sending: 'Sending…', success: "Thank you! Your message has been sent — I'll reply soon.",
   },
   footer: { backToTop: 'Back to top' },
+  emails: {
+    notifyTo: 'alim01716779220@gmail.com',
+    fromName: 'Abdul Alim Mridha',
+    notifySubject: 'New message from {name}: {subject}',
+    confirmSubject: 'Thanks for reaching out, {name}!',
+    confirmHeading: 'Hi {name}, I got your message.',
+    confirmBody:
+      'Thank you for contacting me about "{subject}". This is a quick confirmation that your message has reached me — I personally read every message and usually reply within 24 hours.\n\nIn the meantime, feel free to browse my live projects and automation work at abdulalimmridha.top.',
+    signature: 'Abdul Alim Mridha\nAI Automation & Vibe Coding Specialist',
+  },
 }
 
 export type Portfolio = {

@@ -139,7 +139,7 @@ function ProfileEditor({ p, set }: { p: Profile; set: (p: Profile) => void }) {
 
 const H = 'নতুন লাইন = লাইন ব্রেক · *তারকার ভেতরের লেখা* = ধূসর/আউটলাইন স্টাইল'
 
-const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo'>; title: string; fields: FieldSpec[] }[] = [
+const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo' | 'emails'>; title: string; fields: FieldSpec[] }[] = [
   { group: 'nav', title: 'Top menu', fields: [
     { key: 'about', label: 'About link' }, { key: 'services', label: 'Services link' },
     { key: 'work', label: 'Works link' }, { key: 'live', label: 'Live Projects link' },
@@ -223,6 +223,31 @@ function TextsEditor({ t, set }: { t: SiteText; set: (t: SiteText) => void }) {
   )
 }
 
+function EmailsEditor({ e, set }: { e: SiteText['emails']; set: (e: SiteText['emails']) => void }) {
+  const f = (k: keyof SiteText['emails']) => (v: string) => set({ ...e, [k]: v })
+  const tip = '{name} = যে পাঠিয়েছে তার নাম · {subject} = তার লেখা Subject'
+  return (
+    <div className="agrid">
+      <div className="wide">
+        <p className="amuted">
+          কেউ Contact ফর্ম সাবমিট করলে: মেসেজটা এখানে <strong>Messages</strong>-এ সেভ হয়, আপনার কাছে একটা নোটিফিকেশন মেইল যায়
+          (সেখানে Reply চাপলেই সরাসরি তাকে উত্তর যাবে), আর যে পাঠিয়েছে তার কাছে একটা কনফার্মেশন মেইল যায়।
+        </p>
+      </div>
+      <h3 className="asub wide">আপনার কাছে আসা নোটিফিকেশন</h3>
+      <TextField label="Notification email (কোন মেইলে আসবে)" type="email" value={e.notifyTo} onChange={f('notifyTo')} />
+      <TextField label="Sender name (মেইলে যে নাম দেখাবে)" value={e.fromName} onChange={f('fromName')} />
+      <div className="wide"><TextField label="Notification subject" value={e.notifySubject} onChange={f('notifySubject')} hint={tip} /></div>
+
+      <h3 className="asub wide">যে ফর্ম পূরণ করেছে, তার কাছে কনফার্মেশন</h3>
+      <div className="wide"><TextField label="Subject" value={e.confirmSubject} onChange={f('confirmSubject')} hint={tip} /></div>
+      <div className="wide"><TextField label="Heading" value={e.confirmHeading} onChange={f('confirmHeading')} hint={tip} /></div>
+      <div className="wide"><TextField label="Message" value={e.confirmBody} onChange={f('confirmBody')} multiline hint={tip} /></div>
+      <div className="wide"><TextField label="Signature" value={e.signature} onChange={f('signature')} multiline /></div>
+    </div>
+  )
+}
+
 function SeoEditor({ seo, set }: { seo: SiteText['seo']; set: (s: SiteText['seo']) => void }) {
   return (
     <div className="agrid">
@@ -247,7 +272,14 @@ function SeoEditor({ seo, set }: { seo: SiteText['seo']; set: (s: SiteText['seo'
    MESSAGES
    ========================================================= */
 
-type Msg = { id: string; name: string; email: string; subject: string | null; message: string; is_read: boolean; created_at: string }
+type Msg = { id: string; name: string; email: string; subject: string | null; message: string; is_read: boolean; created_at: string
+  notify_status?: string | null; confirm_status?: string | null }
+
+function MailStatus({ label, s }: { label: string; s?: string | null }) {
+  if (!s) return null
+  const ok = s === 'sent'
+  return <span className="amuted" title={s} style={{ fontSize: 12, color: ok ? '#4ade80' : '#f87171' }}>{ok ? '✓' : '✕'} {label}</span>
+}
 
 function Messages({ onCount }: { onCount: (n: number) => void }) {
   const [msgs, setMsgs] = useState<Msg[] | null>(null)
@@ -296,6 +328,12 @@ function Messages({ onCount }: { onCount: (n: number) => void }) {
             </div>
           </header>
           {m.subject && <h4>{m.subject}</h4>}
+          {(m.notify_status || m.confirm_status) && (
+            <div style={{ display: 'flex', gap: 14, marginBottom: 6 }}>
+              <MailStatus label="মেইল আপনাকে" s={m.notify_status} />
+              <MailStatus label="কনফার্মেশন তাকে" s={m.confirm_status} />
+            </div>
+          )}
           <p>{m.message}</p>
         </article>
       ))}
@@ -348,6 +386,7 @@ const TABS = [
   ['live', 'Live projects'],
   ['skills', 'Skills & tools'],
   ['testimonials', 'Testimonials'],
+  ['emails', 'Emails'],
   ['seo', 'SEO'],
   ['messages', 'Messages'],
   ['account', 'Account'],
@@ -444,6 +483,7 @@ function Dashboard({ session }: { session: Session }) {
 
         {tab === 'profile' && <ProfileEditor p={data.profile} set={(p) => set('profile', p)} />}
         {tab === 'texts' && <TextsEditor t={data.site} set={(v) => set('site', v)} />}
+        {tab === 'emails' && <EmailsEditor e={data.site.emails} set={(emails) => set('site', { ...data.site, emails })} />}
         {tab === 'seo' && <SeoEditor seo={data.site.seo} set={(seo) => set('site', { ...data.site, seo })} />}
         {tab === 'highlights' && (
           <ListEditor items={data.highlights} onChange={(v) => set('highlights', v)} fields={F.highlight} titleKey="title" blank={{ kicker: 'Expert', title: 'New card', caption: '' }} addLabel="Add card" />
