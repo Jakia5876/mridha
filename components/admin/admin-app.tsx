@@ -71,6 +71,14 @@ const F = {
     { key: 'tags', label: 'Tags', type: 'tags' },
     { key: 'link', label: 'Link (optional)', type: 'url' },
   ],
+  webProject: [
+    { key: 'title', label: 'Title' },
+    { key: 'category', label: 'Category (SaaS / Website / Web App)' },
+    { key: 'url', label: 'Live URL', type: 'url', wide: true },
+    { key: 'image', label: 'Screenshot', type: 'image' },
+    { key: 'desc', label: 'Description', type: 'textarea' },
+    { key: 'tags', label: 'Tags', type: 'tags', wide: true },
+  ],
   skill: [
     { key: 'group', label: 'Group name', wide: true },
     { key: 'items', label: 'Skills', type: 'tags', wide: true },
@@ -225,7 +233,8 @@ const TABS = [
   ['highlights', 'Hero cards'],
   ['services', 'Services'],
   ['cases', 'Case studies'],
-  ['projects', 'Projects'],
+  ['projects', 'Workflows'],
+  ['live', 'Live projects'],
   ['skills', 'Skills & tools'],
   ['testimonials', 'Testimonials'],
   ['messages', 'Messages'],
@@ -335,6 +344,26 @@ function Dashboard({ session }: { session: Session }) {
         {tab === 'projects' && (
           <ListEditor items={data.projects} onChange={(v) => set('projects', v)} fields={F.project} titleKey="title"
             blank={{ title: 'New project', desc: '', image: '', tags: [], link: '' }} addLabel="Add project" />
+        )}
+        {tab === 'live' && (
+          <>
+            <p className="amuted" style={{ marginBottom: 14 }}>↑↓ দিয়ে ক্রম বদলান। কোনো একটা প্রজেক্ট বড় করে দেখাতে নিচে &quot;Featured&quot; থেকে বেছে নিন।</p>
+            <ListEditor items={data.webProjects} onChange={(v) => set('webProjects', v)} fields={F.webProject} titleKey="title"
+              blank={{ title: 'New website', category: 'Website', desc: '', url: 'https://', image: '', tags: [], featured: false }} addLabel="Add live project" />
+            <div className="af" style={{ marginTop: 18 }}>
+              <label>Featured (big card)</label>
+              <select
+                value={data.webProjects.findIndex((w) => w.featured)}
+                onChange={(e) => {
+                  const k = Number(e.target.value)
+                  set('webProjects', data.webProjects.map((w, i) => ({ ...w, featured: i === k })))
+                }}
+              >
+                <option value={-1}>— None —</option>
+                {data.webProjects.map((w, i) => <option key={i} value={i}>{w.title}</option>)}
+              </select>
+            </div>
+          </>
         )}
         {tab === 'skills' && (
           <>

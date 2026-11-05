@@ -23,7 +23,7 @@ function Tags({ items }: { items: string[] }) {
 }
 
 export default async function Home() {
-  const { profile: p, highlights, tools, services, caseStudies, projects, skills, testimonials } = await getPortfolio()
+  const { profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials } = await getPortfolio()
 
   return (
     <>
@@ -97,7 +97,7 @@ export default async function Home() {
               <div className="stats">
                 <div><strong data-count={services.length}>0</strong><span>Services</span></div>
                 <div><strong data-count={projects.length + caseStudies.length}>0</strong><span>Workflows shipped</span></div>
-                <div><strong data-count={tools.length}>0</strong><span>Tools mastered</span></div>
+                <div><strong data-count={webProjects.length}>0</strong><span>Live websites</span></div>
               </div>
             </div>
           </div>
@@ -182,6 +182,48 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* ============ LIVE PROJECTS ============ */}
+        {webProjects.length > 0 && (
+          <section className="section" id="live">
+            <div className="section-head">
+              <div className="pill reveal"><span className="pill-dot" />Live Projects</div>
+              <h2 className="display reveal">Shipped<br /><span className="muted">&amp; Live</span></h2>
+            </div>
+            <div className="sites">
+              {webProjects.map((w, i) => {
+                let host = w.url
+                try { host = new URL(w.url).host } catch {}
+                return (
+                  <a className={`site reveal${w.featured ? ' featured' : ''}`} key={w.url || w.title} href={w.url} target="_blank" rel="noopener noreferrer">
+                    <div className="site-bar">
+                      <span className="site-dots"><i /><i /><i /></span>
+                      <span className="site-url">{host}</span>
+                    </div>
+                    <div className="site-shot">
+                      {w.image && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={w.image} alt={`${w.title} screenshot`} loading="lazy" />
+                      )}
+                    </div>
+                    <div className="site-body">
+                      <div className="site-meta">
+                        <span className="site-cat">{w.category}</span>
+                        <span className="idx">[{pad(i + 1)}]</span>
+                      </div>
+                      <h3>{w.title}</h3>
+                      <p>{w.desc}</p>
+                      <div className="site-foot">
+                        <Tags items={w.tags} />
+                        <span className="site-visit">Visit site ↗</span>
+                      </div>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
         {/* ============ WHY / SKILLS ============ */}
         <section className="section" id="skills">
           <div className="why reveal">
@@ -242,6 +284,7 @@ export default async function Home() {
       <footer className="footer">
         <span>© {new Date().getFullYear()} {p.fullName}</span>
         <span className="muted">{p.role}</span>
+        <Socials socials={p.socials} />
         <a href="#top">Back to top ↑</a>
       </footer>
     </>

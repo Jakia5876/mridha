@@ -19,6 +19,15 @@ export type CaseStudy = {
   link?: string
 }
 export type Project = { title: string; desc: string; image: string; tags: string[]; link?: string }
+export type WebProject = {
+  title: string
+  category: string // e.g. "SaaS", "Website", "Web App"
+  desc: string
+  url: string
+  image: string
+  tags: string[]
+  featured?: boolean // বড় করে দেখাবে
+}
 export type SkillGroup = { group: string; items: string[] }
 export type Testimonial = { quote: string; name: string; company: string }
 
@@ -47,6 +56,7 @@ export type Portfolio = {
   services: Service[]
   caseStudies: CaseStudy[]
   projects: Project[]
+  webProjects: WebProject[]
   skills: SkillGroup[]
   testimonials: Testimonial[]
 }
@@ -70,12 +80,13 @@ export const portfolioData: Portfolio = {
     resume: '', // CV-র লিংক, যেমন "/cv.pdf" (ফাইলটা public/ ফোল্ডারে রাখুন)
     // সোশ্যাল লিংক — খালি ("") থাকলে দেখাবে না
     socials: {
-      LinkedIn: '',
+      LinkedIn: 'https://www.linkedin.com/in/abdul-alim-mridha-86647b228/',
+      X: 'https://x.com/mridha_alim',
+      YouTube: 'https://www.youtube.com/@a3mittech',
+      Facebook: 'https://www.facebook.com/a3mittech',
+      GitHub: '',
       Upwork: '',
       Fiverr: '',
-      GitHub: '',
-      Facebook: '',
-      YouTube: '',
     },
     // ফোন মকআপে দেখানো স্কিল বার
     meters: [
@@ -151,6 +162,21 @@ export const portfolioData: Portfolio = {
     { title: 'Upload Products to Multiple WordPress Sites', desc: 'Automated product upload and sync across multiple WordPress/WooCommerce stores simultaneously.', image: '/workflow-4.jpg', tags: ['n8n', 'WooCommerce'], link: '' },
     { title: 'Auto Reply to Customer from Google Sheet', desc: 'Customer inquiry automation with AI agent processing data from Google Sheets with response tracking.', image: '/workflow-5.jpg', tags: ['AI Agent', 'Google Sheets'], link: '' },
     { title: 'Gmail SMTP & cPanel SMTP Setup in n8n', desc: 'Complete SMTP email configuration for reliable Gmail and cPanel email delivery in n8n workflows.', image: '/workflow-2.jpg', tags: ['n8n', 'SMTP'], link: '' },
+  ],
+
+  // লাইভ ওয়েবসাইট / SaaS প্রজেক্ট (ব্রাউজার-উইন্ডো কার্ড)
+  webProjects: [
+    { title: 'Wasend-Pro', category: 'SaaS', featured: true, url: 'https://wasend-pro.vercel.app/', image: '/projects/wasend-pro.jpg', tags: ['SaaS', 'Admin Panel'], desc: 'A SaaS platform with a secure admin panel and account management — built and deployed end-to-end.' },
+    { title: 'Nexora SMM', category: 'Web App', url: 'https://nexora-smm.vercel.app/', image: '/projects/nexora-smm.jpg', tags: ['SMM Panel', 'bKash', 'API'], desc: 'Automated social media marketing panel for Facebook, YouTube, Instagram, TikTok and Telegram — with instant API orders and local bKash payments.' },
+    { title: 'A3M Social Post Creator', category: 'AI Tool', url: 'https://social-media-post-gamma.vercel.app/', image: '/projects/a3m-social-post.jpg', tags: ['AI', 'Content', 'Bangla / English'], desc: 'AI post generator: describe an idea and get ready-to-publish titles, descriptions, hashtags and thumbnails for YouTube, TikTok, Facebook, Instagram, LinkedIn and X.' },
+    { title: 'Autofloy', category: 'E-commerce', url: 'https://autofloy-orcin.vercel.app/', image: '/projects/autofloy.jpg', tags: ['Digital Products', 'Store'], desc: 'Digital goods store with curated templates, e-books, AI tools and resources — categories, search, wishlist and cart.' },
+    { title: 'Resumely — CV Builder', category: 'Web App', url: 'https://resumely-ruddy.vercel.app/', image: '/projects/resumely.jpg', tags: ['Resume', 'PDF Export'], desc: 'Build a clean, ATS-friendly CV with a live preview and one-click PDF export.' },
+    { title: 'A3M Language Club', category: 'EdTech', url: 'https://a3m-language-club.vercel.app/', image: '/projects/a3m-language-club.jpg', tags: ['Education', 'Japanese', 'Chinese'], desc: 'Online platform to learn Japanese and Chinese — JLPT & HSK preparation, live classes and interactive lessons.' },
+    { title: 'Nexora Beauty Salon', category: 'Website', url: 'https://nexora-beauty-salon-teal.vercel.app/', image: '/projects/nexora-beauty-salon.jpg', tags: ['Business', 'Beauty'], desc: 'Luxury salon website showcasing bridal styling, skincare, hydra-glow facials and makeup artistry.' },
+    { title: 'Nexora Law Firm', category: 'Website', url: 'https://nexora-case-manager.vercel.app/', image: '/projects/nexora-law-firm.jpg', tags: ['Business', 'Legal'], desc: 'Law firm website for corporate litigation, cross-border M&A, intellectual property and trial defense.' },
+    { title: 'Doctors Medicin Corner', category: 'E-commerce', url: 'https://doctorsmedicinconner.vercel.app/', image: '/projects/doctors-medicin-corner.jpg', tags: ['Pharmacy', 'Healthcare'], desc: 'Online pharmacy for genuine medicines and healthcare products — search, prescription upload, order tracking and fast delivery.' },
+    { title: 'Natural Plate', category: 'E-commerce', url: 'https://natural-platenew.vercel.app/', image: '/projects/natural-plate.jpg', tags: ['Organic', 'Cash on Delivery'], desc: 'Organic food store — fresh vegetables, fruits, grains and eco-friendly areca leaf plates, delivered to your door.' },
+    { title: 'Kashor Bidda Niketon', category: 'Website', url: 'https://kashor-bidda-niketon.vercel.app/', image: '/projects/kashor-bidda-niketon.jpg', tags: ['School', 'Bangla'], desc: 'School website (Play group to Class 10) — curriculum, teachers, gallery, notices and admissions, fully in Bangla.' },
   ],
 
   skills: [
