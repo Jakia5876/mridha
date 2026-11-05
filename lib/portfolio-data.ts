@@ -64,7 +64,15 @@ export type SiteText = {
   live: { pill: string; heading: string; visitLabel: string }
   skills: { tagline: string }
   testimonials: { pill: string; heading: string }
-  contact: { pill: string; heading: string; name: string; email: string; subject: string; message: string; button: string; sending: string; success: string }
+  contact: {
+    pill: string; heading: string; name: string; email: string; button: string; sending: string; success: string
+    formTitle: string; responseNote: string; phone: string; timeline: string; selectPlaceholder: string
+    service: string; budget: string; details: string; detailsPlaceholder: string; privacyNote: string; sendAnother: string
+    /** comma-separated choices */
+    serviceOptions: string; budgetOptions: string; timelineOptions: string
+    /** @deprecated old form fields (kept so older saved data still type-checks) */
+    subject?: string; message?: string
+  }
   footer: { backToTop: string }
   /** Contact-form emails. {name} and {subject} are replaced with the visitor's values. */
   emails: {
@@ -103,8 +111,16 @@ export const defaultSiteText: SiteText = {
   skills: { tagline: 'Designed to automate.\n*Built to scale.*\nMade to deliver.' },
   testimonials: { pill: 'Hear from the Clients', heading: 'Kind\n*Words*' },
   contact: {
-    pill: 'Contact Me', heading: "Let's\n*Automate*", name: 'Name', email: 'Email', subject: 'Subject', message: 'Message',
+    pill: 'Contact Me', heading: "Let's\n*Automate*", name: 'Name', email: 'Email',
     button: 'Start Project', sending: 'Sending…', success: "Thank you! Your message has been sent — I'll reply soon.",
+    formTitle: 'Tell me about your project', responseNote: 'I usually reply within 24 hours.',
+    phone: 'Phone / WhatsApp', timeline: 'Timeline', selectPlaceholder: 'Select…',
+    service: 'What do you need?', budget: 'Budget (USD)', details: 'Project details',
+    detailsPlaceholder: 'What do you want to build or automate? Goals, tools you use, deadlines…',
+    privacyNote: 'Your details are only used to reply to you — never shared.', sendAnother: 'Send another message',
+    serviceOptions: 'AI Automation, n8n Workflow, GoHighLevel CRM, Website, Web App / SaaS, Other',
+    budgetOptions: 'Under $500, $500 – $1k, $1k – $3k, $3k – $5k, $5k+, Not sure yet',
+    timelineOptions: 'ASAP, Within 2 weeks, Within 1 month, 1 – 3 months, Flexible',
   },
   footer: { backToTop: 'Back to top' },
   emails: {
@@ -238,6 +254,7 @@ export const portfolioData: Portfolio = {
 
   // লাইভ ওয়েবসাইট / SaaS প্রজেক্ট (ব্রাউজার-উইন্ডো কার্ড)
   webProjects: [
+    { title: 'Nexora Wholesale', category: 'B2B E-commerce', url: 'https://nexora-whole-sale.vercel.app/', image: '/projects/nexora-wholesale.jpg', tags: ['B2B', 'Volume Pricing', 'Quotes'], desc: 'B2B wholesale catalog for retailers and distributors — tiered volume pricing on every SKU, custom quote requests and trade accounts.' },
     { title: 'Wasend-Pro', category: 'SaaS', featured: true, url: 'https://wasend-pro.vercel.app/', image: '/projects/wasend-pro.jpg', tags: ['SaaS', 'Admin Panel'], desc: 'A SaaS platform with a secure admin panel and account management — built and deployed end-to-end.' },
     { title: 'Nexora SMM', category: 'Web App', url: 'https://nexora-smm.vercel.app/', image: '/projects/nexora-smm.jpg', tags: ['SMM Panel', 'bKash', 'API'], desc: 'Automated social media marketing panel for Facebook, YouTube, Instagram, TikTok and Telegram — with instant API orders and local bKash payments.' },
     { title: 'A3M Social Post Creator', category: 'AI Tool', url: 'https://social-media-post-gamma.vercel.app/', image: '/projects/a3m-social-post.jpg', tags: ['AI', 'Content', 'Bangla / English'], desc: 'AI post generator: describe an idea and get ready-to-publish titles, descriptions, hashtags and thumbnails for YouTube, TikTok, Facebook, Instagram, LinkedIn and X.' },

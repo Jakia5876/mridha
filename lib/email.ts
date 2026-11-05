@@ -8,7 +8,11 @@ import type { SiteText } from './portfolio-data'
 const FROM_ADDRESS = process.env.MAIL_FROM || 'hello@abdulalimmridha.top'
 const SITE = 'https://www.abdulalimmridha.top'
 
-export type Submission = { name: string; email: string; subject: string; message: string }
+export type Submission = {
+  name: string; email: string; subject: string; message: string
+  /** project-inquiry extras (optional so older callers still work) */
+  phone?: string; service?: string; budget?: string; timeline?: string; details?: string
+}
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
@@ -51,16 +55,21 @@ export function sendOwnerNotification(v: Submission, t: SiteText['emails']) {
   const rows = [
     ['Name', esc(v.name)],
     ['Email', `<a href="mailto:${esc(v.email)}">${esc(v.email)}</a>`],
-    ['Subject', esc(v.subject || '—')],
+    ...(v.phone
+      ? [['Phone', `<a href="tel:${esc(v.phone.replace(/[^\d+]/g, ''))}">${esc(v.phone)}</a> · <a href="https://wa.me/${v.phone.replace(/\D/g, '')}">WhatsApp</a>`]]
+      : []),
+    ['Service', esc(v.service || '—')],
+    ['Budget', esc(v.budget || '—')],
+    ['Timeline', esc(v.timeline || '—')],
   ]
     .map(([k, val]) => `<tr><td style="padding:4px 14px 4px 0;color:#71717a;white-space:nowrap">${k}</td><td style="padding:4px 0">${val}</td></tr>`)
     .join('')
-  const html = shell('New contact message', `
+  const html = shell('New project inquiry', `
     <table role="presentation" cellpadding="0" cellspacing="0">${rows}</table>
-    <div style="margin:18px 0;padding:16px 18px;background:#fafafa;border-left:3px solid #ff5a1f;border-radius:6px;white-space:normal">${nl2br(v.message)}</div>
+    <div style="margin:18px 0;padding:16px 18px;background:#fafafa;border-left:3px solid #ff5a1f;border-radius:6px;white-space:normal">${nl2br(v.details ?? v.message)}</div>
     <p style="margin:0"><a href="mailto:${esc(v.email)}" style="display:inline-block;background:#050505;color:#fff;text-decoration:none;padding:10px 20px;border-radius:999px;font-weight:600">Reply to ${esc(v.name)}</a>
     &nbsp; <a href="${SITE}/admin" style="color:#52525b">Open admin →</a></p>`)
-  const text = `New contact message\n\nName: ${v.name}\nEmail: ${v.email}\nSubject: ${v.subject || '—'}\n\n${v.message}\n\nAdmin: ${SITE}/admin`
+  const text = `New project inquiry\n\nName: ${v.name}\nEmail: ${v.email}\nPhone: ${v.phone || '—'}\nService: ${v.service || '—'}\nBudget: ${v.budget || '—'}\nTimeline: ${v.timeline || '—'}\n\n${v.details ?? v.message}\n\nAdmin: ${SITE}/admin`
   return send({
     from: `${oneLine(t.fromName, 60) || 'Portfolio'} <${FROM_ADDRESS}>`,
     to: t.notifyTo,

@@ -430,16 +430,61 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .contact-link { font-size: clamp(18px, 1.8vw, 26px); font-weight: 500; width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--ease); }
 .contact-link:hover { background-size: 100% 1px; }
 .contact-info .socials { margin-top: 14px; }
-.contact-form { display: flex; flex-direction: column; gap: 18px; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
-.contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.contact-form label { display: flex; flex-direction: column; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
-.contact-form input, .contact-form textarea {
-  font: inherit; font-family: var(--body); font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--text);
-  background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 10px 0; outline: none; resize: vertical;
-  transition: border-color .3s;
+.contact-form {
+  display: flex; flex-direction: column; gap: 20px; padding: clamp(22px, 3vw, 36px);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  box-shadow: 0 30px 80px -40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06);
 }
-.contact-form input:focus, .contact-form textarea:focus { border-color: var(--text); }
-.contact-form .btn { align-self: flex-start; margin-top: 8px; }
+.cf-head { display: flex; flex-direction: column; gap: 4px; padding-bottom: 18px; border-bottom: 1px solid var(--line-soft); }
+.cf-head h3 { font-size: clamp(19px, 1.6vw, 23px); font-weight: 600; letter-spacing: -.01em; }
+.cf-head p { font-size: 14px; }
+.contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cf-field { display: flex; flex-direction: column; gap: 8px; border: 0; min-width: 0; position: relative; }
+.cf-field > span, .cf-field > legend { font-size: 13px; font-weight: 500; color: #cfcfcf; padding: 0; margin-bottom: 0; }
+.cf-field > legend { margin-bottom: 10px; }
+.cf-field i { font-style: normal; color: var(--accent); }
+.contact-form input, .contact-form textarea, .contact-form select {
+  font: inherit; font-family: var(--body); font-size: 15px; color: var(--text); width: 100%;
+  background: rgba(255,255,255,0.035); border: 1px solid var(--line); border-radius: 12px;
+  padding: 13px 15px; outline: none; resize: vertical;
+  transition: border-color .25s, background .25s, box-shadow .25s;
+}
+.contact-form textarea { min-height: 130px; line-height: 1.55; }
+.contact-form select {
+  appearance: none; cursor: pointer; padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%238a8a8a' stroke-width='1.6'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center;
+}
+.contact-form select option { background: #141414; color: var(--text); }
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: #5c5c5c; }
+.contact-form input:hover, .contact-form textarea:hover, .contact-form select:hover { border-color: rgba(255,255,255,0.22); }
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+  border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.06); box-shadow: 0 0 0 4px rgba(255,255,255,0.06);
+}
+.cf-field.invalid input, .cf-field.invalid textarea { border-color: #ff8a65; box-shadow: 0 0 0 4px rgba(255,138,101,0.12); }
+.cf-field.invalid > legend, .cf-field.invalid > span { color: #ff8a65; }
+.cf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cf-chip {
+  font-size: 13.5px; padding: 9px 15px; border-radius: 999px; cursor: pointer; color: #cfcfcf;
+  border: 1px solid var(--line); background: rgba(255,255,255,0.03);
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.cf-chip:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+.cf-chip:active { transform: scale(.97); }
+.cf-chip.on { background: var(--text); color: #0a0a0a; border-color: var(--text); font-weight: 500; }
+.cf-field.invalid .cf-chip { border-color: rgba(255,138,101,0.55); }
+.cf-count { position: absolute; right: 12px; bottom: 10px; font-family: var(--mono); font-size: 10.5px; color: #5c5c5c; pointer-events: none; }
+.contact-form .cf-submit { width: 100%; justify-content: center; padding-block: 16px; margin-top: 4px; font-size: 16px; }
+.contact-form .cf-submit:disabled { opacity: .6; cursor: progress; }
+.cf-privacy { text-align: center; font-size: 12.5px; color: #6b6b6b; margin-top: -8px; }
+.cf-done { align-items: center; text-align: center; padding-block: 56px; gap: 14px; }
+.cf-done h3 { font-size: 20px; font-weight: 600; max-width: 380px; line-height: 1.4; }
+.cf-check {
+  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-size: 28px; color: #0a0a0a;
+  background: #3ddc84; box-shadow: 0 0 0 8px rgba(61,220,132,0.12), 0 0 40px rgba(61,220,132,0.35);
+}
+.cf-done .btn { margin-top: 8px; }
 
 .footer {
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px;
