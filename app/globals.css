@@ -104,7 +104,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .menu-list { list-style: none; }
 .menu-list a {
   display: flex; align-items: baseline; gap: 20px;
-  font-family: var(--display); text-transform: uppercase; font-size: clamp(44px, 8vw, 110px); line-height: 1.05;
+  font-family: var(--display); text-transform: uppercase; font-size: clamp(36px, 6vw, 80px); line-height: 1.05;
   color: var(--dim); transition: color .3s, transform .5s var(--ease);
 }
 .menu-list a span { font-family: var(--mono); font-size: 14px; color: var(--muted); }
@@ -139,7 +139,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero-name {
   grid-column: 1 / 2; grid-row: 1; z-index: 2;
   font-family: var(--display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(64px, 10.5vw, 170px); line-height: .86; letter-spacing: -.01em;
+  font-size: clamp(52px, 7.6vw, 124px); line-height: .86; letter-spacing: -.01em;
 }
 .hero-name .line { display: block; overflow: hidden; }
 .hero-name .line > span { display: inline-block; transform: translateY(105%); animation: rise 1.2s var(--ease) forwards; }
@@ -149,7 +149,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .disciplines {
   grid-column: 3; grid-row: 1; justify-self: end; text-align: right; list-style: none; z-index: 2;
-  font-size: clamp(16px, 1.7vw, 30px); letter-spacing: .02em; text-transform: uppercase; line-height: 1.35;
+  font-size: clamp(14px, 1.25vw, 22px); letter-spacing: .02em; text-transform: uppercase; line-height: 1.35;
 }
 .disciplines li { color: var(--muted); opacity: 0; animation: fade 1s var(--ease) forwards; transition: color .3s; }
 .disciplines li:hover { color: var(--text); }
@@ -211,7 +211,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero-word {
   grid-column: 3; grid-row: 2; align-self: center; justify-self: end; z-index: 2;
   font-family: var(--display); text-transform: uppercase; line-height: .9;
-  font-size: clamp(56px, 8.5vw, 150px);
+  font-size: clamp(44px, 6vw, 110px);
   background: linear-gradient(180deg, #3d3d3d, #171717);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   writing-mode: horizontal-tb;
@@ -233,7 +233,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .award-text { text-align: center; transition: opacity .4s, transform .4s var(--ease); min-height: 90px; display: flex; flex-direction: column; justify-content: center; }
 .award-text.swap { opacity: 0; transform: translateY(8px); }
 .award-kicker { font-weight: 700; font-size: 20px; }
-.award-title { font-weight: 800; font-size: clamp(26px, 2.6vw, 36px); line-height: 1; letter-spacing: -.03em; }
+.award-title { font-weight: 800; font-size: clamp(22px, 2vw, 30px); line-height: 1; letter-spacing: -.03em; }
 .award-rule { height: 1px; margin: 22px 0 18px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
 .award-foot { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
 .award-caption { font-size: 15px; line-height: 1.4; max-width: 230px; min-height: 42px; }
@@ -253,7 +253,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .marquee { border-block: 1px solid var(--line-soft); overflow: hidden; padding: 22px 0; background: var(--bg-2); }
 .marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
 .marquee-track span {
-  font-family: var(--display); text-transform: uppercase; font-size: clamp(28px, 3.5vw, 48px);
+  font-family: var(--display); text-transform: uppercase; font-size: clamp(22px, 2.5vw, 36px);
   padding: 0 28px; color: var(--dim); display: flex; align-items: center; gap: 56px; white-space: nowrap;
 }
 .marquee-track span::after { content: "✦"; font-size: .5em; color: var(--muted); }
@@ -271,14 +271,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .wall::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,5,5,.85), transparent 60%); pointer-events: none; }
 .wall-copy { position: relative; z-index: 1; }
 .wall-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
-.wall-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(34px, 5vw, 80px); line-height: .95; margin-top: 10px; }
+.wall-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(28px, 3.6vw, 58px); line-height: .95; margin-top: 10px; }
 
 /* ============ SECTIONS ============ */
 .section { position: relative; padding: clamp(80px, 12vw, 160px) var(--pad); }
 .section-head { display: flex; flex-direction: column; gap: 28px; margin-bottom: 60px; }
 .section-head.sub { margin: 100px 0 36px; }
-.display { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(54px, 9vw, 150px); line-height: .9; }
-.display-sm { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(32px, 4vw, 60px); line-height: 1; }
+.display { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(40px, 5.6vw, 92px); line-height: .92; }
+.display-sm { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(26px, 2.8vw, 42px); line-height: 1; }
 
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }
@@ -287,11 +287,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .about .pill { margin-bottom: 40px; }
 .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start; }
 .about-copy { display: flex; flex-direction: column; gap: 20px; color: var(--muted); max-width: 560px; }
-.about-copy .lead { color: var(--text); font-size: clamp(19px, 1.6vw, 24px); line-height: 1.45; }
+.about-copy .lead { color: var(--text); font-size: clamp(17px, 1.25vw, 20px); line-height: 1.45; }
 .about-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 30px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 18px; overflow: hidden; }
 .stats div { background: var(--bg); padding: 22px; display: flex; flex-direction: column; }
-.stats strong { font-family: var(--display); font-weight: 400; font-size: 46px; color: var(--text); line-height: 1; }
+.stats strong { font-family: var(--display); font-weight: 400; font-size: 38px; color: var(--text); line-height: 1; }
 .stats strong::after { content: "+"; color: var(--accent); }
 .stats span { font-size: 13px; margin-top: 6px; }
 
@@ -307,7 +307,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .service > * { position: relative; z-index: 1; transition: color .4s, transform .6s var(--ease); }
 .service-num { font-family: var(--mono); color: var(--muted); font-size: 14px; }
-.service-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(26px, 3vw, 46px); line-height: 1; font-weight: 400; }
+.service-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(22px, 2.2vw, 34px); line-height: 1; font-weight: 400; }
 .service-desc { color: var(--muted); font-size: 15px; max-width: 440px; }
 .service-arrow { font-size: 26px; justify-self: end; }
 .service:hover::before { transform: scaleY(1); }
@@ -328,7 +328,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .case-index { position: absolute; top: 20px; left: 20px; font-family: var(--mono); font-size: 13px; padding: 6px 12px; border-radius: 999px; background: rgba(0,0,0,0.7); border: 1px solid var(--line); }
 .case-body { padding: clamp(26px, 3vw, 44px); display: flex; flex-direction: column; gap: 18px; background: var(--bg-2); }
 .case-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; }
-.case-title { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(30px, 3.2vw, 50px); line-height: .95; }
+.case-title { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 2.4vw, 38px); line-height: .95; }
 .case-steps { display: grid; gap: 14px; margin-top: 6px; }
 .case-steps div { border-left: 1px solid var(--line); padding-left: 16px; }
 .case-steps b { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); margin-bottom: 2px; }
@@ -352,7 +352,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .project-body p { font-size: 14px; color: var(--muted); }
 
 /* why + skills */
-.why { display: flex; flex-direction: column; font-family: var(--display); text-transform: uppercase; font-size: clamp(42px, 7vw, 120px); line-height: .95; margin-bottom: 80px; }
+.why { display: flex; flex-direction: column; font-family: var(--display); text-transform: uppercase; font-size: clamp(34px, 4.6vw, 80px); line-height: .95; margin-bottom: 70px; }
 .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .skill {
   border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; background: var(--card);
@@ -360,7 +360,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .skill:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.3); }
 .skill-num { font-family: var(--mono); font-size: 13px; color: var(--muted); }
-.skill h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 30px; line-height: 1; }
+.skill h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 26px; line-height: 1; }
 .skill ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
 .skill li { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); color: #cfcfcf; }
 
@@ -381,10 +381,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* contact */
 .contact { overflow: hidden; }
 .spotlight.small { background: radial-gradient(ellipse 40% 50% at 50% 0%, rgba(255,255,255,0.1), transparent 70%); }
-.contact-title { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(70px, 15vw, 260px); line-height: .85; margin: 40px 0 70px; }
+.contact-title { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(56px, 9.5vw, 160px); line-height: .88; margin: 36px 0 60px; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
 .contact-info { display: flex; flex-direction: column; gap: 14px; }
-.contact-link { font-size: clamp(22px, 2.4vw, 34px); font-weight: 500; width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--ease); }
+.contact-link { font-size: clamp(18px, 1.8vw, 26px); font-weight: 500; width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--ease); }
 .contact-link:hover { background-size: 100% 1px; }
 .contact-info .socials { margin-top: 14px; }
 .contact-form { display: flex; flex-direction: column; gap: 18px; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
@@ -417,7 +417,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero-name, .disciplines, .stage, .hero-word, .award-card { grid-column: 1; grid-row: auto; justify-self: start; }
   .disciplines { text-align: left; justify-self: start; }
   .stage { justify-self: center; width: min(300px, 78vw); margin-top: 0; }
-  .hero-word { justify-self: center; margin-top: -30px; font-size: 20vw; }
+  .hero-word { justify-self: center; margin-top: -24px; font-size: 16vw; }
   .logo { display: none; }
   .scroll-hint { display: none; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -552,7 +552,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .site:hover .site-visit { color: var(--accent); }
 .site.featured { grid-column: span 2; }
 .site.featured .site-shot { aspect-ratio: 16 / 8; }
-.site.featured .site-body h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(28px, 3vw, 44px); line-height: 1; }
+.site.featured .site-body h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 2.4vw, 36px); line-height: 1; }
 .footer .socials a { padding: 4px 12px; font-size: 12px; }
 @media (max-width: 1100px) { .sites { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .sites { grid-template-columns: 1fr; } .site.featured { grid-column: auto; } .site.featured .site-shot { aspect-ratio: 16 / 10; } }
@@ -590,13 +590,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .menu-list { margin: auto 0; }
 .menu-list a {
   align-items: center; gap: 18px;
-  font-size: clamp(34px, min(9vw, 8.2vh), 92px); line-height: 1.08;
+  font-size: clamp(30px, min(7.5vw, 7vh), 72px); line-height: 1.08;
 }
 .menu-list a span { min-width: 2.6em; }
 .menu-foot { margin-top: 28px; }
 /* ============ HERO: never wider than the screen ============ */
 @media (min-width: 861px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr); }
-  .hero-word { font-size: clamp(48px, 6.6vw, 150px); max-width: 100%; }
+  .hero-word { font-size: clamp(40px, 5vw, 110px); max-width: 100%; }
   .disciplines { max-width: 100%; }
 }
