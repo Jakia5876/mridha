@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { Meter } from '@/lib/portfolio-data'
+import { Rich } from './rich'
 
-export function HeroStage({ name, photo, meters }: { name: string; photo: string; meters: Meter[] }) {
+export function HeroStage({ name, photo, meters, tagline, status }: {
+  name: string; photo: string; meters: Meter[]; tagline: string; status: string
+}) {
   const phone = useRef<HTMLDivElement>(null)
   const [filled, setFilled] = useState(false)
 
@@ -35,7 +38,7 @@ export function HeroStage({ name, photo, meters }: { name: string; photo: string
           </div>
           <div className="phone-name">{name}</div>
           <div className="phone-role">
-            S-TIER AUTOMATION <em>· AI · CRM · WEB</em>
+            <Rich text={tagline} emTag="em" emClass="" />
           </div>
           <div className="meters">
             {meters.map((m) => (
@@ -51,7 +54,7 @@ export function HeroStage({ name, photo, meters }: { name: string; photo: string
             ))}
           </div>
           <div className="phone-status">
-            <span className="dot-live" /> Available for projects
+            <span className="dot-live" /> {status}
           </div>
         </div>
       </div>

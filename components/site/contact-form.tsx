@@ -2,11 +2,12 @@
 
 import { useState, type FormEvent } from 'react'
 import { getBrowserSupabase } from '@/lib/supabase'
+import type { SiteText } from '@/lib/portfolio-data'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 /** Saves the message to Supabase (visible in /admin → Messages). Falls back to email if that fails. */
-export function ContactForm({ email }: { email: string }) {
+export function ContactForm({ email, text: t }: { email: string; text: SiteText['contact'] }) {
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
 
@@ -44,27 +45,27 @@ export function ContactForm({ email }: { email: string }) {
     <form className="contact-form reveal" onSubmit={onSubmit} noValidate>
       <div className="row">
         <label>
-          Name
+          {t.name}
           <input name="name" required autoComplete="name" maxLength={200} />
         </label>
         <label>
-          Email
+          {t.email}
           <input name="email" type="email" required autoComplete="email" maxLength={320} />
         </label>
       </div>
       <label>
-        Subject
+        {t.subject}
         <input name="subject" maxLength={300} />
       </label>
       <label>
-        Message
+        {t.message}
         <textarea name="message" rows={4} required maxLength={5000} />
       </label>
       <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
       {error && <p className="form-error">{error}</p>}
-      {status === 'sent' && <p className="form-ok">Thank you! Your message has been sent — I&apos;ll reply soon.</p>}
+      {status === 'sent' && <p className="form-ok">{t.success}</p>}
       <button className="btn btn-light" type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : 'Start Project'} <span className="arrow">↗</span>
+        {status === 'sending' ? t.sending : t.button} <span className="arrow">↗</span>
       </button>
     </form>
   )

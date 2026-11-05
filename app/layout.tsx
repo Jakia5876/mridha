@@ -2,73 +2,43 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Anton, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import { getPortfolio } from '@/lib/content'
 
 const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--font-anton', display: 'swap' })
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono-jb', display: 'swap' })
 
 const siteUrl = 'https://www.abdulalimmridha.top'
-const siteTitle = 'Abdul Alim Mridha - AI Automation, GoHighLevel CRM & Vibe Coding Specialist'
-const siteDescription =
-  'Abdul Alim Mridha builds n8n workflow automation, GoHighLevel CRM systems, AI chatbots, and modern vibe-coded websites that save businesses time and grow revenue.'
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: `${siteTitle} | Portfolio`,
-  description: siteDescription,
-  keywords: [
-    'GoHighLevel',
-    'GoHighLevel CRM',
-    'GoHighLevel automation',
-    'GHL expert',
-    'vibe coding',
-    'AI automation',
-    'workflow automation',
-    'AI chatbot',
-    'email automation',
-    'SMS automation',
-    'Next.js website',
-  ],
-  authors: [{ name: 'Abdul Alim Mridha', url: siteUrl }],
-  alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteUrl,
-    siteName: 'Abdul Alim Mridha',
-    title: siteTitle,
-    description: siteDescription,
-    images: [
-      {
-        url: '/alim.png',
-        width: 1200,
-        height: 630,
-        alt: 'Abdul Alim Mridha',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteTitle,
-    description: siteDescription,
-  },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+/** SEO text comes from /admin → SEO (falls back to lib/portfolio-data.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  const { site, profile } = await getPortfolio()
+  const { title, description, keywords, shareImage } = site.seo
+  return {
+    metadataBase: new URL(siteUrl),
+    title: `${title} | Portfolio`,
+    description,
+    keywords,
+    authors: [{ name: profile.fullName, url: siteUrl }],
+    alternates: { canonical: '/' },
+    openGraph: {
+      type: 'website',
+      locale: 'en_US',
+      url: siteUrl,
+      siteName: profile.fullName,
+      title,
+      description,
+      images: [{ url: shareImage || profile.photo, width: 1200, height: 630, alt: profile.fullName }],
+    },
+    twitter: { card: 'summary_large_image', title, description },
+    icons: {
+      icon: [
+        { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
+        { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
+        { url: '/icon.svg', type: 'image/svg+xml' },
+      ],
+      apple: '/apple-icon.png',
+    },
+  }
 }
 
 export const viewport: Viewport = {
@@ -80,11 +50,13 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { site, profile: p } = await getPortfolio()
+  const abs = (u: string) => (u.startsWith('http') ? u : `${siteUrl}${u}`)
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable} ${mono.variable}`}>
       <head>
@@ -94,12 +66,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Abdul Alim Mridha',
+              name: p.fullName,
               url: siteUrl,
-              image: `${siteUrl}/alim.png`,
-              jobTitle: 'AI Automation, GoHighLevel CRM & Vibe Coding Specialist',
-              description: siteDescription,
-              email: 'mailto:alim01716779220@gmail.com',
+              image: abs(p.photo),
+              jobTitle: p.role,
+              description: site.seo.description,
+              email: `mailto:${p.email}`,
               knowsAbout: ['n8n', 'GoHighLevel', 'CRM Automation', 'Vibe Coding', 'AI Agents', 'Next.js', 'Workflow Automation'],
             }),
           }}

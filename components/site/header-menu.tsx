@@ -2,18 +2,23 @@
 
 import { useEffect, useState } from 'react'
 import { Socials } from './socials'
+import type { SiteText } from '@/lib/portfolio-data'
 
-const links = [
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#work', label: 'Works' },
-  { href: '#live', label: 'Live Projects' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#testimonials', label: 'Clients' },
-  { href: '#contact', label: 'Contact' },
-]
+const SECTIONS = [
+  ['#about', 'about'],
+  ['#services', 'services'],
+  ['#work', 'work'],
+  ['#live', 'live'],
+  ['#skills', 'skills'],
+  ['#testimonials', 'testimonials'],
+  ['#contact', 'contact'],
+] as const
 
-export function HeaderMenu({ name, email, socials }: { name: string; email: string; socials: Record<string, string> }) {
+export function HeaderMenu({ name, email, socials, nav }: {
+  name: string; email: string; socials: Record<string, string>; nav: SiteText['nav']
+}) {
+  // empty label in /admin → link hidden
+  const links = SECTIONS.map(([href, key]) => ({ href, label: nav[key] })).filter((l) => l.label)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('')
@@ -41,6 +46,7 @@ export function HeaderMenu({ name, email, socials }: { name: string; email: stri
     const onTop = () => { if (window.scrollY < window.innerHeight * 0.5) setActive('') }
     window.addEventListener('scroll', onTop, { passive: true })
     return () => { io.disconnect(); window.removeEventListener('scroll', onTop) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -68,7 +74,7 @@ export function HeaderMenu({ name, email, socials }: { name: string; email: stri
         </nav>
 
         <a href="#contact" className="btn btn-ghost header-cta">
-          Start a project <span className="arrow">↗</span>
+          {nav.cta} <span className="arrow">↗</span>
         </a>
       </header>
 

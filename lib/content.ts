@@ -4,9 +4,13 @@ import { CONTENT_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from './supabase'
 /** Fill any missing fields from the defaults so a partial/old DB document never breaks the page. */
 export function withDefaults(data: Partial<Portfolio> | null | undefined): Portfolio {
   const d = data || {}
+  const site = Object.fromEntries(
+    Object.entries(portfolioData.site).map(([k, v]) => [k, { ...v, ...((d.site as Record<string, object> | undefined)?.[k] || {}) }]),
+  ) as Portfolio['site']
   return {
     ...portfolioData,
     ...d,
+    site,
     profile: {
       ...portfolioData.profile,
       ...(d.profile || {}),

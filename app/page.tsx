@@ -5,6 +5,7 @@ import { HighlightCard } from '@/components/site/highlight-card'
 import { Effects } from '@/components/site/effects'
 import { ContactForm } from '@/components/site/contact-form'
 import { Socials } from '@/components/site/socials'
+import { Rich } from '@/components/site/rich'
 
 // Re-check Supabase for new content at most every 5 minutes
 // (saving in /admin refreshes the page immediately).
@@ -23,14 +24,14 @@ function Tags({ items }: { items: string[] }) {
 }
 
 export default async function Home() {
-  const { profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials } = await getPortfolio()
+  const { site: t, profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials } = await getPortfolio()
 
   return (
     <>
       <div className="cursor-glow" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <Effects />
-      <HeaderMenu name={p.fullName} email={p.email} socials={p.socials} />
+      <HeaderMenu name={p.fullName} email={p.email} socials={p.socials} nav={t.nav} />
 
       <main id="top">
         {/* ============ HERO ============ */}
@@ -49,13 +50,13 @@ export default async function Home() {
             ))}
           </ul>
 
-          <HeroStage name={p.fullName} photo={p.photo} meters={p.meters} />
+          <HeroStage name={p.fullName} photo={p.photo} meters={p.meters} tagline={t.hero.phoneTagline} status={t.hero.status} />
 
           <div className="hero-word" aria-hidden="true">{p.heroWord}</div>
 
           <HighlightCard items={highlights} />
 
-          <div className="scroll-hint"><span />Scroll</div>
+          <div className="scroll-hint"><span />{t.hero.scrollHint}</div>
         </section>
 
         {/* ============ MARQUEE ============ */}
@@ -69,35 +70,35 @@ export default async function Home() {
 
         {/* ============ WORKFLOW WALL ============ */}
         <section className="wall" aria-label="Automation workflows">
-          <div className="wall-img" style={{ backgroundImage: "url('/workflow-banner.png')" }} />
+          <div className="wall-img" style={{ backgroundImage: `url('${t.wall.image}')` }} />
           <div className="wall-copy">
-            <span className="wall-kicker">// live systems</span>
+            <span className="wall-kicker">{t.wall.kicker}</span>
             <p className="wall-title">
-              Every node is a task<br /><span className="muted">you never do again.</span>
+              <Rich text={t.wall.title} />
             </p>
           </div>
         </section>
 
         {/* ============ ABOUT ============ */}
         <section className="section about" id="about">
-          <div className="pill reveal"><span className="pill-dot" />About Me</div>
+          <div className="pill reveal"><span className="pill-dot" />{t.about.pill}</div>
           <div className="about-grid">
             <h2 className="display reveal">
-              I build systems<br />that <span className="muted">work while</span><br />you sleep.
+              <Rich text={t.about.heading} />
             </h2>
             <div className="about-copy reveal">
               <p className="lead">{p.intro}</p>
               <p>{p.about}</p>
               <div className="about-actions">
-                <a href="#work" className="btn btn-light">See Work <span className="arrow">↗</span></a>
+                <a href="#work" className="btn btn-light">{t.about.workButton} <span className="arrow">↗</span></a>
                 {p.resume && (
-                  <a href={p.resume} className="btn btn-ghost" download>Download CV <span className="arrow">↓</span></a>
+                  <a href={p.resume} className="btn btn-ghost" download>{t.about.cvButton} <span className="arrow">↓</span></a>
                 )}
               </div>
               <div className="stats">
-                <div><strong data-count={services.length}>0</strong><span>Services</span></div>
-                <div><strong data-count={projects.length + caseStudies.length}>0</strong><span>Workflows shipped</span></div>
-                <div><strong data-count={webProjects.length}>0</strong><span>Live websites</span></div>
+                <div><strong data-count={services.length}>0</strong><span>{t.about.statServices}</span></div>
+                <div><strong data-count={projects.length + caseStudies.length}>0</strong><span>{t.about.statWorkflows}</span></div>
+                <div><strong data-count={webProjects.length}>0</strong><span>{t.about.statLive}</span></div>
               </div>
             </div>
           </div>
@@ -106,8 +107,8 @@ export default async function Home() {
         {/* ============ SERVICES ============ */}
         <section className="section" id="services">
           <div className="section-head">
-            <div className="pill reveal"><span className="pill-dot" />What I Do</div>
-            <h2 className="display reveal">Services</h2>
+            <div className="pill reveal"><span className="pill-dot" />{t.services.pill}</div>
+            <h2 className="display reveal"><Rich text={t.services.heading} /></h2>
           </div>
           <ol className="services">
             {services.map((s, i) => (
@@ -124,8 +125,8 @@ export default async function Home() {
         {/* ============ SELECTED WORK ============ */}
         <section className="section" id="work">
           <div className="section-head">
-            <div className="pill reveal"><span className="pill-dot" />Selected Work</div>
-            <h2 className="display reveal">Case<br /><span className="muted">Studies</span></h2>
+            <div className="pill reveal"><span className="pill-dot" />{t.work.pill}</div>
+            <h2 className="display reveal"><Rich text={t.work.heading} /></h2>
           </div>
           <div className="cases">
             {caseStudies.map((c, i) => (
@@ -136,17 +137,17 @@ export default async function Home() {
                   <span className="case-index">[{pad(i + 1)}]</span>
                 </div>
                 <div className="case-body">
-                  <div className="case-meta"><span>{c.type}</span><span>Case Study</span></div>
+                  <div className="case-meta"><span>{c.type}</span><span>{t.work.caseLabel}</span></div>
                   <h3 className="case-title">{c.title}</h3>
                   <div className="case-steps">
-                    <div><b>Challenge</b><p>{c.challenge}</p></div>
-                    <div><b>Approach</b><p>{c.approach}</p></div>
-                    <div><b>Result</b><p>{c.result}</p></div>
+                    <div><b>{t.work.challenge}</b><p>{c.challenge}</p></div>
+                    <div><b>{t.work.approach}</b><p>{c.approach}</p></div>
+                    <div><b>{t.work.result}</b><p>{c.result}</p></div>
                   </div>
                   <Tags items={c.tags} />
                   {c.link && (
                     <a className="btn btn-ghost" href={c.link} target="_blank" rel="noopener noreferrer">
-                      View Project <span className="arrow">↗</span>
+                      {t.work.viewButton} <span className="arrow">↗</span>
                     </a>
                   )}
                 </div>
@@ -155,7 +156,7 @@ export default async function Home() {
           </div>
 
           <div className="section-head sub">
-            <h3 className="display-sm reveal">More workflows</h3>
+            <h3 className="display-sm reveal">{t.work.moreHeading}</h3>
           </div>
           <div className="projects">
             {projects.map((pr, i) => {
@@ -186,8 +187,8 @@ export default async function Home() {
         {webProjects.length > 0 && (
           <section className="section" id="live">
             <div className="section-head">
-              <div className="pill reveal"><span className="pill-dot" />Live Projects</div>
-              <h2 className="display reveal">Shipped<br /><span className="muted">&amp; Live</span></h2>
+              <div className="pill reveal"><span className="pill-dot" />{t.live.pill}</div>
+              <h2 className="display reveal"><Rich text={t.live.heading} /></h2>
             </div>
             <div className="sites">
               {webProjects.map((w, i) => {
@@ -214,7 +215,7 @@ export default async function Home() {
                       <p>{w.desc}</p>
                       <div className="site-foot">
                         <Tags items={w.tags} />
-                        <span className="site-visit">Visit site ↗</span>
+                        <span className="site-visit">{t.live.visitLabel} ↗</span>
                       </div>
                     </div>
                   </a>
@@ -227,9 +228,7 @@ export default async function Home() {
         {/* ============ WHY / SKILLS ============ */}
         <section className="section" id="skills">
           <div className="why reveal">
-            <span>Designed to automate.</span>
-            <span className="muted">Built to scale.</span>
-            <span>Made to deliver.</span>
+            <Rich text={t.skills.tagline} lines />
           </div>
           <div className="skills">
             {skills.map((s, i) => (
@@ -245,8 +244,8 @@ export default async function Home() {
         {/* ============ TESTIMONIALS ============ */}
         <section className="section" id="testimonials">
           <div className="section-head">
-            <div className="pill reveal"><span className="pill-dot" />Hear from the Clients</div>
-            <h2 className="display reveal">Kind<br /><span className="muted">Words</span></h2>
+            <div className="pill reveal"><span className="pill-dot" />{t.testimonials.pill}</div>
+            <h2 className="display reveal"><Rich text={t.testimonials.heading} /></h2>
           </div>
           <div className="testimonials">
             {testimonials.map((t) => (
@@ -267,8 +266,8 @@ export default async function Home() {
         {/* ============ CONTACT ============ */}
         <section className="section contact" id="contact">
           <div className="spotlight small" aria-hidden="true" />
-          <div className="pill reveal"><span className="pill-dot" />Contact Me</div>
-          <h2 className="contact-title reveal">Let&apos;s<br /><span className="outline">Automate</span></h2>
+          <div className="pill reveal"><span className="pill-dot" />{t.contact.pill}</div>
+          <h2 className="contact-title reveal"><Rich text={t.contact.heading} emClass="outline" /></h2>
           <div className="contact-grid">
             <div className="contact-info reveal">
               <a className="contact-link" href={`mailto:${p.email}`}>{p.email}</a>
@@ -276,7 +275,7 @@ export default async function Home() {
               <p className="muted">{p.location}</p>
               <Socials socials={p.socials} />
             </div>
-            <ContactForm email={p.email} />
+            <ContactForm email={p.email} text={t.contact} />
           </div>
         </section>
       </main>
@@ -285,7 +284,7 @@ export default async function Home() {
         <span>© {new Date().getFullYear()} {p.fullName}</span>
         <span className="muted">{p.role}</span>
         <Socials socials={p.socials} />
-        <a href="#top">Back to top ↑</a>
+        <a href="#top">{t.footer.backToTop} ↑</a>
       </footer>
     </>
   )

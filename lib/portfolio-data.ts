@@ -49,7 +49,63 @@ export type Profile = {
   meters: Meter[]
 }
 
+/**
+ * পেজের সব হেডিং, বাটন, লেবেল আর SEO টেক্সট।
+ * হেডিং-এ: নতুন লাইন = লাইন ব্রেক, *তারকা চিহ্নের ভেতরের লেখা* = ধূসর/আউটলাইন স্টাইল।
+ */
+export type SiteText = {
+  seo: { title: string; description: string; keywords: string[]; shareImage: string }
+  nav: { about: string; services: string; work: string; live: string; skills: string; testimonials: string; contact: string; cta: string }
+  hero: { phoneTagline: string; status: string; scrollHint: string }
+  wall: { image: string; kicker: string; title: string }
+  about: { pill: string; heading: string; workButton: string; cvButton: string; statServices: string; statWorkflows: string; statLive: string }
+  services: { pill: string; heading: string }
+  work: { pill: string; heading: string; caseLabel: string; challenge: string; approach: string; result: string; viewButton: string; moreHeading: string }
+  live: { pill: string; heading: string; visitLabel: string }
+  skills: { tagline: string }
+  testimonials: { pill: string; heading: string }
+  contact: { pill: string; heading: string; name: string; email: string; subject: string; message: string; button: string; sending: string; success: string }
+  footer: { backToTop: string }
+}
+
+export const defaultSiteText: SiteText = {
+  seo: {
+    title: 'Abdul Alim Mridha - AI Automation, GoHighLevel CRM & Vibe Coding Specialist',
+    description:
+      'Abdul Alim Mridha builds n8n workflow automation, GoHighLevel CRM systems, AI chatbots, and modern vibe-coded websites that save businesses time and grow revenue.',
+    keywords: [
+      'GoHighLevel', 'GoHighLevel CRM', 'GoHighLevel automation', 'GHL expert', 'vibe coding', 'AI automation',
+      'workflow automation', 'AI chatbot', 'email automation', 'SMS automation', 'Next.js website',
+    ],
+    shareImage: '/alim.png',
+  },
+  nav: {
+    about: 'About', services: 'Services', work: 'Works', live: 'Live Projects',
+    skills: 'Skills', testimonials: 'Clients', contact: 'Contact', cta: 'Start a project',
+  },
+  hero: { phoneTagline: 'S-TIER AUTOMATION *· AI · CRM · WEB*', status: 'Available for projects', scrollHint: 'Scroll' },
+  wall: { image: '/workflow-banner.png', kicker: '// live systems', title: 'Every node is a task\n*you never do again.*' },
+  about: {
+    pill: 'About Me', heading: 'I build systems\nthat *work while*\nyou sleep.', workButton: 'See Work', cvButton: 'Download CV',
+    statServices: 'Services', statWorkflows: 'Workflows shipped', statLive: 'Live websites',
+  },
+  services: { pill: 'What I Do', heading: 'Services' },
+  work: {
+    pill: 'Selected Work', heading: 'Case\n*Studies*', caseLabel: 'Case Study', challenge: 'Challenge', approach: 'Approach',
+    result: 'Result', viewButton: 'View Project', moreHeading: 'More workflows',
+  },
+  live: { pill: 'Live Projects', heading: 'Shipped\n*& Live*', visitLabel: 'Visit site' },
+  skills: { tagline: 'Designed to automate.\n*Built to scale.*\nMade to deliver.' },
+  testimonials: { pill: 'Hear from the Clients', heading: 'Kind\n*Words*' },
+  contact: {
+    pill: 'Contact Me', heading: "Let's\n*Automate*", name: 'Name', email: 'Email', subject: 'Subject', message: 'Message',
+    button: 'Start Project', sending: 'Sending…', success: "Thank you! Your message has been sent — I'll reply soon.",
+  },
+  footer: { backToTop: 'Back to top' },
+}
+
 export type Portfolio = {
+  site: SiteText
   profile: Profile
   highlights: Highlight[]
   tools: string[]
@@ -62,6 +118,7 @@ export type Portfolio = {
 }
 
 export const portfolioData: Portfolio = {
+  site: defaultSiteText,
   profile: {
     firstName: 'ABDUL',
     lastName: 'ALIM',

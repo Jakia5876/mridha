@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { getBrowserSupabase, CONTENT_ID } from '@/lib/supabase'
 import { withDefaults } from '@/lib/content'
-import type { Portfolio, Profile } from '@/lib/portfolio-data'
-import { ListEditor, TagsField, TextField, UploadField, type FieldSpec } from './fields'
+import type { Portfolio, Profile, SiteText } from '@/lib/portfolio-data'
+import { Field, ListEditor, TagsField, TextField, UploadField, type FieldSpec } from './fields'
 
 /* =========================================================
    LOGIN
@@ -134,6 +134,116 @@ function ProfileEditor({ p, set }: { p: Profile; set: (p: Profile) => void }) {
 }
 
 /* =========================================================
+   PAGE TEXTS (headings, buttons, labels) + SEO
+   ========================================================= */
+
+const H = 'নতুন লাইন = লাইন ব্রেক · *তারকার ভেতরের লেখা* = ধূসর/আউটলাইন স্টাইল'
+
+const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo'>; title: string; fields: FieldSpec[] }[] = [
+  { group: 'nav', title: 'Top menu', fields: [
+    { key: 'about', label: 'About link' }, { key: 'services', label: 'Services link' },
+    { key: 'work', label: 'Works link' }, { key: 'live', label: 'Live Projects link' },
+    { key: 'skills', label: 'Skills link' }, { key: 'testimonials', label: 'Clients link' },
+    { key: 'contact', label: 'Contact link' }, { key: 'cta', label: 'Header button' },
+  ] },
+  { group: 'hero', title: 'Hero (top of page)', fields: [
+    { key: 'phoneTagline', label: 'Phone: small tagline under name', hint: '*…* অংশ হালকা দেখাবে' },
+    { key: 'status', label: 'Phone: status (green dot)' }, { key: 'scrollHint', label: '"Scroll" hint' },
+  ] },
+  { group: 'wall', title: 'Workflow banner', fields: [
+    { key: 'image', label: 'Banner image', type: 'image' }, { key: 'kicker', label: 'Small text' },
+    { key: 'title', label: 'Big text', type: 'textarea', hint: H },
+  ] },
+  { group: 'about', title: 'About section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
+    { key: 'workButton', label: 'Button: See Work' }, { key: 'cvButton', label: 'Button: Download CV' },
+    { key: 'statServices', label: 'Stat label 1 (Services)' }, { key: 'statWorkflows', label: 'Stat label 2 (Workflows)' },
+    { key: 'statLive', label: 'Stat label 3 (Live websites)' },
+  ] },
+  { group: 'services', title: 'Services section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
+  ] },
+  { group: 'work', title: 'Case studies & workflows', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
+    { key: 'caseLabel', label: '"Case Study" label' }, { key: 'viewButton', label: 'Button: View Project' },
+    { key: 'challenge', label: '"Challenge" label' }, { key: 'approach', label: '"Approach" label' },
+    { key: 'result', label: '"Result" label' }, { key: 'moreHeading', label: 'Workflows grid heading' },
+  ] },
+  { group: 'live', title: 'Live projects section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
+    { key: 'visitLabel', label: '"Visit site" label' },
+  ] },
+  { group: 'skills', title: 'Skills section', fields: [
+    { key: 'tagline', label: 'Big tagline', type: 'textarea', hint: 'প্রতি লাইন আলাদা লাইনে দেখাবে · *…* = ধূসর' },
+  ] },
+  { group: 'testimonials', title: 'Testimonials section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
+  ] },
+  { group: 'contact', title: 'Contact section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Big heading', type: 'textarea', hint: H },
+    { key: 'name', label: 'Form: Name label' }, { key: 'email', label: 'Form: Email label' },
+    { key: 'subject', label: 'Form: Subject label' }, { key: 'message', label: 'Form: Message label' },
+    { key: 'button', label: 'Form: send button' }, { key: 'sending', label: 'Form: while sending' },
+    { key: 'success', label: 'Form: success message', wide: true },
+  ] },
+  { group: 'footer', title: 'Footer', fields: [{ key: 'backToTop', label: '"Back to top" link' }] },
+]
+
+function TextsEditor({ t, set }: { t: SiteText; set: (t: SiteText) => void }) {
+  const [open, setOpen] = useState<string | null>('nav')
+  return (
+    <div className="alist">
+      <p className="amuted" style={{ marginBottom: 6 }}>
+        ডিজাইন একই থাকবে, শুধু লেখা বদলাবে। মেনু লিংকের লেখা খালি রাখলে সেই লিংকটা লুকিয়ে যাবে।
+      </p>
+      {TEXT_GROUPS.map(({ group, title, fields }) => (
+        <div className={`acard${open === group ? ' open' : ''}`} key={group}>
+          <div className="acard-head">
+            <button className="acard-title" onClick={() => setOpen(open === group ? null : group)}>
+              {title}
+              <span className="acard-chev">{open === group ? '−' : '+'}</span>
+            </button>
+          </div>
+          {open === group && (
+            <div className="acard-body">
+              {fields.map((f) => (
+                <div key={f.key} className={f.wide || f.type === 'textarea' || f.type === 'image' ? 'wide' : ''}>
+                  <Field
+                    spec={f}
+                    value={(t[group] as Record<string, unknown>)[f.key]}
+                    onChange={(v) => set({ ...t, [group]: { ...t[group], [f.key]: v } })}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function SeoEditor({ seo, set }: { seo: SiteText['seo']; set: (s: SiteText['seo']) => void }) {
+  return (
+    <div className="agrid">
+      <div className="wide">
+        <TextField label="Page title (Google / browser tab)" value={seo.title} onChange={(v) => set({ ...seo, title: v })}
+          hint={`${seo.title.length} অক্ষর · ৫০–৭০ অক্ষর ভালো`} />
+      </div>
+      <div className="wide">
+        <TextField label="Description (Google-এ টাইটেলের নিচে)" value={seo.description} onChange={(v) => set({ ...seo, description: v })}
+          multiline hint={`${seo.description.length} অক্ষর · ১২০–১৬০ অক্ষর ভালো`} />
+      </div>
+      <div className="wide"><TagsField label="Keywords" value={seo.keywords} onChange={(v) => set({ ...seo, keywords: v })} /></div>
+      <div className="wide">
+        <UploadField label="Share image (Facebook / WhatsApp / LinkedIn preview)" value={seo.shareImage} onChange={(v) => set({ ...seo, shareImage: v })}
+          hint="১২০০×৬৩০ সাইজ সবচেয়ে ভালো · খালি রাখলে প্রোফাইল ছবি" />
+      </div>
+    </div>
+  )
+}
+
+/* =========================================================
    MESSAGES
    ========================================================= */
 
@@ -230,6 +340,7 @@ function Account({ email }: { email: string }) {
 
 const TABS = [
   ['profile', 'Profile'],
+  ['texts', 'Page texts'],
   ['highlights', 'Hero cards'],
   ['services', 'Services'],
   ['cases', 'Case studies'],
@@ -237,6 +348,7 @@ const TABS = [
   ['live', 'Live projects'],
   ['skills', 'Skills & tools'],
   ['testimonials', 'Testimonials'],
+  ['seo', 'SEO'],
   ['messages', 'Messages'],
   ['account', 'Account'],
 ] as const
@@ -331,6 +443,8 @@ function Dashboard({ session }: { session: Session }) {
         </header>
 
         {tab === 'profile' && <ProfileEditor p={data.profile} set={(p) => set('profile', p)} />}
+        {tab === 'texts' && <TextsEditor t={data.site} set={(v) => set('site', v)} />}
+        {tab === 'seo' && <SeoEditor seo={data.site.seo} set={(seo) => set('site', { ...data.site, seo })} />}
         {tab === 'highlights' && (
           <ListEditor items={data.highlights} onChange={(v) => set('highlights', v)} fields={F.highlight} titleKey="title" blank={{ kicker: 'Expert', title: 'New card', caption: '' }} addLabel="Add card" />
         )}

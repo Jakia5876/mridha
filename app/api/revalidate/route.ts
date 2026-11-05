@@ -11,6 +11,6 @@ export async function POST(req: Request) {
   const { data: isAdmin, error } = await supabase.rpc('is_admin')
   if (error || isAdmin !== true) return NextResponse.json({ error: 'Not an admin' }, { status: 403 })
 
-  revalidatePath('/')
+  revalidatePath('/', 'layout')
   return NextResponse.json({ ok: true })
 }
