@@ -508,6 +508,21 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .amsg header a { color: var(--muted); font-size: 14px; margin-left: 6px; }
 .amsg h4 { font-size: 15px; }
 .amsg p { white-space: pre-wrap; color: #d6d6d6; font-size: 15px; }
+.amsg.unread { cursor: pointer; }
+.amsg.empty { padding: 34px 20px; text-align: center; align-items: center; }
+.amsgs-bar { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+.amsgs-filter { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+.amsgs-filter button { padding: 6px 14px; border-radius: 999px; font-size: 13px; color: var(--muted); }
+.amsgs-filter button.on { background: var(--text); color: #000; font-weight: 600; }
+.amsg-time { font-size: 12px; white-space: nowrap; }
+.amsg-meta { font-size: 13px; color: var(--muted); }
+.amsg footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.achips { display: flex; gap: 8px; flex-wrap: wrap; }
+.achip { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line-soft); color: var(--muted); }
+.achip.ok { color: #4ade80; border-color: #4ade8040; background: #4ade8012; }
+.achip.bad { color: #f87171; border-color: #f8717140; background: #f8717112; cursor: help; }
+.anew { font-family: var(--mono); font-size: 10px; letter-spacing: .15em; color: #000; background: var(--accent); border-radius: 4px; padding: 2px 6px; margin-right: 8px; vertical-align: 2px; }
+.abtn.asm { padding: 7px 16px; font-size: 13px; }
 
 .alogin { min-height: 100vh; display: grid; place-items: center; padding: 20px; background: radial-gradient(ellipse 40% 50% at 50% 0%, rgba(255,255,255,.08), transparent 70%), var(--bg); }
 .alogin-card { width: min(400px, 100%); display: flex; flex-direction: column; gap: 16px; padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: var(--bg-2); }

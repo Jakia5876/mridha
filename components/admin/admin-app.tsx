@@ -275,30 +275,49 @@ function SeoEditor({ seo, set }: { seo: SiteText['seo']; set: (s: SiteText['seo'
 type Msg = { id: string; name: string; email: string; subject: string | null; message: string; is_read: boolean; created_at: string
   notify_status?: string | null; confirm_status?: string | null }
 
-function MailStatus({ label, s }: { label: string; s?: string | null }) {
-  if (!s) return null
+/** "✓ Emailed to you" style chip. Hover shows the exact reason if it failed. */
+function MailChip({ ok: label, fail, s }: { ok: string; fail: string; s?: string | null }) {
+  if (!s) return <span className="achip" title="এই মেসেজটা ইমেইল সিস্টেম চালুর আগের">— {label}</span>
   const ok = s === 'sent'
-  return <span className="amuted" title={s} style={{ fontSize: 12, color: ok ? '#4ade80' : '#f87171' }}>{ok ? '✓' : '✕'} {label}</span>
+  return <span className={`achip ${ok ? 'ok' : 'bad'}`} title={s}>{ok ? '✓' : '✕'} {ok ? label : fail}</span>
+}
+
+function timeAgo(iso: string) {
+  const s = (Date.now() - new Date(iso).getTime()) / 1000
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s / 60)} min ago`
+  if (s < 86400) return `${Math.floor(s / 3600)} h ago`
+  return new Date(iso).toLocaleString()
 }
 
 function Messages({ onCount }: { onCount: (n: number) => void }) {
   const [msgs, setMsgs] = useState<Msg[] | null>(null)
   const [err, setErr] = useState('')
+  const [filter, setFilter] = useState<'all' | 'new'>('all')
   const sb = getBrowserSupabase()
 
   const load = useCallback(async () => {
     const { data, error } = await sb.from('messages').select('*').order('created_at', { ascending: false })
     if (error) return setErr(error.message)
+    setErr('')
     setMsgs(data as Msg[])
   }, [sb])
 
-  useEffect(() => { load() }, [load])
+  // new messages show up by themselves: every 20 s and whenever you come back to the tab
+  useEffect(() => {
+    load()
+    const t = setInterval(load, 20_000)
+    const onFocus = () => load()
+    window.addEventListener('focus', onFocus)
+    return () => { clearInterval(t); window.removeEventListener('focus', onFocus) }
+  }, [load])
   useEffect(() => { if (msgs) onCount(msgs.filter((m) => !m.is_read).length) }, [msgs, onCount])
 
-  async function toggleRead(m: Msg) {
-    const { error } = await sb.from('messages').update({ is_read: !m.is_read }).eq('id', m.id)
-    if (error) return setErr(error.message)
-    setMsgs((all) => all?.map((x) => (x.id === m.id ? { ...x, is_read: !x.is_read } : x)) ?? null)
+  async function setRead(m: Msg, is_read: boolean) {
+    if (m.is_read === is_read) return
+    setMsgs((all) => all?.map((x) => (x.id === m.id ? { ...x, is_read } : x)) ?? null)
+    const { error } = await sb.from('messages').update({ is_read }).eq('id', m.id)
+    if (error) setErr(error.message)
   }
   async function remove(m: Msg) {
     if (!confirm(`${m.name}-এর মেসেজ মুছে ফেলবেন?`)) return
@@ -307,34 +326,48 @@ function Messages({ onCount }: { onCount: (n: number) => void }) {
     setMsgs((all) => all?.filter((x) => x.id !== m.id) ?? null)
   }
 
-  if (err) return <p className="af-err">{err}</p>
-  if (!msgs) return <p className="amuted">Loading…</p>
-  if (!msgs.length) return <p className="amuted">এখনো কোনো মেসেজ আসেনি। কেউ Contact ফর্ম পূরণ করলে এখানে দেখাবে।</p>
+  if (!msgs) return err ? <p className="af-err">{err}</p> : <p className="amuted">Loading…</p>
+  const unread = msgs.filter((m) => !m.is_read).length
+  const shown = filter === 'new' ? msgs.filter((m) => !m.is_read) : msgs
 
   return (
     <div className="amsgs">
-      <button className="abtn abtn-ghost" onClick={load}>↻ Refresh</button>
-      {msgs.map((m) => (
-        <article key={m.id} className={`amsg${m.is_read ? '' : ' unread'}`}>
+      <div className="amsgs-bar">
+        <p className="amuted">Everything people send through the contact form on your site.</p>
+        <div className="amsgs-filter">
+          <button className={filter === 'all' ? 'on' : ''} onClick={() => setFilter('all')}>All ({msgs.length})</button>
+          <button className={filter === 'new' ? 'on' : ''} onClick={() => setFilter('new')}>New ({unread})</button>
+          <button onClick={load} title="Refresh">↻</button>
+        </div>
+      </div>
+      {err && <p className="af-err">{err}</p>}
+      {!shown.length && (
+        <div className="amsg empty">
+          <p className="amuted">{msgs.length ? 'কোনো নতুন মেসেজ নেই 🎉' : 'এখনো কোনো মেসেজ আসেনি। কেউ Contact ফর্ম পূরণ করলে এখানে নিজে থেকেই দেখাবে।'}</p>
+        </div>
+      )}
+      {shown.map((m) => (
+        <article key={m.id} className={`amsg${m.is_read ? '' : ' unread'}`} onClick={() => setRead(m, true)}>
           <header>
             <div>
-              <strong>{m.name}</strong> <a href={`mailto:${m.email}`}>{m.email}</a>
-              <div className="amuted">{new Date(m.created_at).toLocaleString()}</div>
+              {!m.is_read && <span className="anew">NEW</span>}
+              <strong>{m.name}</strong> <a href={`mailto:${m.email}`} onClick={(e) => e.stopPropagation()}>{m.email}</a>
             </div>
-            <div className="acard-tools">
-              <a className="abtn abtn-ghost" href={`mailto:${m.email}?subject=${encodeURIComponent('Re: ' + (m.subject || 'your message'))}`}>Reply</a>
-              <button onClick={() => toggleRead(m)}>{m.is_read ? 'Mark unread' : 'Mark read'}</button>
-              <button className="danger" onClick={() => remove(m)}>✕</button>
-            </div>
+            <span className="amuted amsg-time" title={new Date(m.created_at).toLocaleString()}>{timeAgo(m.created_at)}</span>
           </header>
-          {m.subject && <h4>{m.subject}</h4>}
-          {(m.notify_status || m.confirm_status) && (
-            <div style={{ display: 'flex', gap: 14, marginBottom: 6 }}>
-              <MailStatus label="মেইল আপনাকে" s={m.notify_status} />
-              <MailStatus label="কনফার্মেশন তাকে" s={m.confirm_status} />
-            </div>
-          )}
+          {m.subject && <div className="amsg-meta">Subject: {m.subject}</div>}
           <p>{m.message}</p>
+          <footer>
+            <div className="achips">
+              <MailChip ok="Emailed to you" fail="Email to you failed" s={m.notify_status} />
+              <MailChip ok="Confirmation sent" fail="Confirmation failed" s={m.confirm_status} />
+            </div>
+            <div className="acard-tools" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setRead(m, !m.is_read)}>{m.is_read ? 'Mark unread' : 'Mark read'}</button>
+              <button className="danger" title="Delete" onClick={() => remove(m)}>✕</button>
+              <a className="abtn abtn-ghost asm" href={`mailto:${m.email}?subject=${encodeURIComponent('Re: ' + (m.subject || 'your message'))}`} onClick={() => setRead(m, true)}>Reply ↗</a>
+            </div>
+          </footer>
         </article>
       ))}
     </div>
@@ -377,6 +410,7 @@ function Account({ email }: { email: string }) {
    ========================================================= */
 
 const TABS = [
+  ['messages', 'Messages'],
   ['profile', 'Profile'],
   ['texts', 'Page texts'],
   ['highlights', 'Hero cards'],
@@ -388,14 +422,13 @@ const TABS = [
   ['testimonials', 'Testimonials'],
   ['emails', 'Emails'],
   ['seo', 'SEO'],
-  ['messages', 'Messages'],
   ['account', 'Account'],
 ] as const
 type Tab = (typeof TABS)[number][0]
 
 function Dashboard({ session }: { session: Session }) {
   const sb = getBrowserSupabase()
-  const [tab, setTab] = useState<Tab>('profile')
+  const [tab, setTab] = useState<Tab>('messages')
   const [data, setData] = useState<Portfolio | null>(null)
   const [dirty, setDirty] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -413,6 +446,15 @@ function Dashboard({ session }: { session: Session }) {
       const { count } = await sb.from('messages').select('id', { count: 'exact', head: true }).eq('is_read', false)
       setUnread(count || 0)
     })()
+  }, [sb])
+
+  // keep the "N new" badge fresh while working in other tabs
+  useEffect(() => {
+    const t = setInterval(async () => {
+      const { count } = await sb.from('messages').select('id', { count: 'exact', head: true }).eq('is_read', false)
+      if (typeof count === 'number') setUnread(count)
+    }, 30_000)
+    return () => clearInterval(t)
   }, [sb])
 
   useEffect(() => {
@@ -459,7 +501,7 @@ function Dashboard({ session }: { session: Session }) {
           {TABS.map(([id, label]) => (
             <button key={id} className={tab === id ? 'on' : ''} onClick={() => setTab(id)}>
               {label}
-              {id === 'messages' && unread > 0 && <span className="abadge">{unread}</span>}
+              {id === 'messages' && unread > 0 && <span className="abadge">{unread} new</span>}
             </button>
           ))}
         </nav>
