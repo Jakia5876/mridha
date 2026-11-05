@@ -30,8 +30,19 @@ export function HeroStage({ name, photo, meters, tagline, status }: {
   return (
     <div className="stage">
       <div className="phone" ref={phone}>
-        <div className="phone-notch" />
+        <span className="phone-btn phone-btn-action" aria-hidden="true" />
+        <span className="phone-btn phone-btn-vol" aria-hidden="true" />
+        <span className="phone-btn phone-btn-power" aria-hidden="true" />
         <div className="phone-screen">
+          <div className="phone-island" aria-hidden="true" />
+          <div className="phone-statusbar" aria-hidden="true">
+            <span>9:41</span>
+            <span className="sb-icons">
+              <svg viewBox="0 0 18 12" width="15" height="10"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
+              <svg viewBox="0 0 16 12" width="13" height="10"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0L8 11.5Zm-4.2-4.3L2.3 5.7a8 8 0 0 1 11.4 0l-1.5 1.5a5.9 5.9 0 0 0-8.4 0ZM.8 4.2-.6 2.8a11.2 11.2 0 0 1 17.2 0l-1.4 1.4a9.2 9.2 0 0 0-14.4 0Z" /></svg>
+              <span className="sb-battery"><i /></span>
+            </span>
+          </div>
           <div className="phone-photo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={photo} alt={name} />
@@ -59,6 +70,7 @@ export function HeroStage({ name, photo, meters, tagline, status }: {
         </div>
       </div>
       <div className="pedestal" aria-hidden="true" />
+      <div className="phone-glow" aria-hidden="true" />
       <div className="floor-glow" aria-hidden="true" />
     </div>
   )
