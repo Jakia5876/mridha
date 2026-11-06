@@ -73,6 +73,7 @@ export type SiteText = {
     /** @deprecated old form fields (kept so older saved data still type-checks) */
     subject?: string; message?: string
   }
+  book: { navButton: string; pill: string; heading: string; sub: string; button: string; orMessage: string }
   footer: { backToTop: string }
   /** Contact-form emails. {name} and {subject} are replaced with the visitor's values. */
   emails: {
@@ -122,6 +123,11 @@ export const defaultSiteText: SiteText = {
     budgetOptions: 'Under $500, $500 – $1k, $1k – $3k, $3k – $5k, $5k+, Not sure yet',
     timelineOptions: 'ASAP, Within 2 weeks, Within 1 month, 1 – 3 months, Flexible',
   },
+  book: {
+    navButton: 'Book a Call', pill: 'Book a Call', heading: 'Prefer to talk?',
+    sub: 'Pick a time that suits you — we can meet on Google Meet or Zoom, your choice. Times show in your own timezone.',
+    button: 'Pick a time', orMessage: 'Or send me a message',
+  },
   footer: { backToTop: 'Back to top' },
   emails: {
     notifyTo: 'alim01716779220@gmail.com',
@@ -135,6 +141,10 @@ export const defaultSiteText: SiteText = {
   },
 }
 
+/** Cal.com booking. calUser = the part after cal.com/ ; slug = the meeting's URL part. */
+export type BookingEvent = { title: string; slug: string; duration: number; desc: string }
+export type Booking = { calUser: string; events: BookingEvent[] }
+
 export type Portfolio = {
   site: SiteText
   profile: Profile
@@ -146,6 +156,7 @@ export type Portfolio = {
   webProjects: WebProject[]
   skills: SkillGroup[]
   testimonials: Testimonial[]
+  booking: Booking
 }
 
 export const portfolioData: Portfolio = {
@@ -253,6 +264,15 @@ export const portfolioData: Portfolio = {
   ],
 
   // লাইভ ওয়েবসাইট / SaaS প্রজেক্ট (ব্রাউজার-উইন্ডো কার্ড)
+  booking: {
+    calUser: 'abdulalimmridha',
+    events: [
+      { title: 'Free Discovery Call', slug: 'discovery', duration: 15, desc: 'A quick intro call to understand your business and see how automation can help.' },
+      { title: 'Project Consultation', slug: 'consultation', duration: 30, desc: "Let's discuss your project in detail — goals, tools, timeline and budget." },
+      { title: 'Automation Strategy Session', slug: 'strategy', duration: 60, desc: 'A deep-dive session to plan a complete automation system for your business.' },
+    ],
+  },
+
   webProjects: [
     { title: 'Nexora Wholesale', category: 'B2B E-commerce', url: 'https://nexora-whole-sale.vercel.app/', image: '/projects/nexora-wholesale.jpg', tags: ['B2B', 'Volume Pricing', 'Quotes'], desc: 'B2B wholesale catalog for retailers and distributors — tiered volume pricing on every SKU, custom quote requests and trade accounts.' },
     { title: 'Wasend-Pro', category: 'SaaS', featured: true, url: 'https://wasend-pro.vercel.app/', image: '/projects/wasend-pro.jpg', tags: ['SaaS', 'Admin Panel'], desc: 'A SaaS platform with a secure admin panel and account management — built and deployed end-to-end.' },

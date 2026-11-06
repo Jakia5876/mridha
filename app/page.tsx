@@ -6,6 +6,7 @@ import { Effects } from '@/components/site/effects'
 import { ContactForm } from '@/components/site/contact-form'
 import { Socials } from '@/components/site/socials'
 import { Rich } from '@/components/site/rich'
+import { BookingCards, CalEmbed } from '@/components/site/booking'
 
 // Re-check Supabase for new content at most every 5 minutes
 // (saving in /admin refreshes the page immediately).
@@ -24,14 +25,17 @@ function Tags({ items }: { items: string[] }) {
 }
 
 export default async function Home() {
-  const { site: t, profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials } = await getPortfolio()
+  const { site: t, profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials, booking } = await getPortfolio()
+  const firstEvent = booking?.calUser && booking.events?.find((e) => e.slug)
+  const bookLink = firstEvent ? `${booking.calUser}/${firstEvent.slug}` : ''
 
   return (
     <>
       <div className="cursor-glow" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <Effects />
-      <HeaderMenu name={p.fullName} email={p.email} socials={p.socials} nav={t.nav} />
+      <HeaderMenu name={p.fullName} email={p.email} socials={p.socials} nav={t.nav} book={bookLink ? { link: bookLink, label: t.book.navButton } : undefined} />
+      {bookLink && <CalEmbed />}
 
       <main id="top">
         {/* ============ HERO ============ */}
@@ -268,6 +272,7 @@ export default async function Home() {
           <div className="spotlight small" aria-hidden="true" />
           <div className="pill reveal"><span className="pill-dot" />{t.contact.pill}</div>
           <h2 className="contact-title reveal"><Rich text={t.contact.heading} emClass="outline" /></h2>
+          {booking && <BookingCards booking={booking} text={t.book} />}
           <div className="contact-grid">
             <div className="contact-info reveal">
               <a className="contact-link" href={`mailto:${p.email}`}>{p.email}</a>

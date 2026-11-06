@@ -45,6 +45,12 @@ function Login() {
    ========================================================= */
 
 const F = {
+  bookingEvent: [
+    { key: 'title', label: 'Title' },
+    { key: 'slug', label: 'Cal.com URL part (e.g. discovery)' },
+    { key: 'duration', label: 'Minutes', type: 'number' },
+    { key: 'desc', label: 'Description', type: 'textarea' },
+  ] as FieldSpec[],
   highlight: [
     { key: 'kicker', label: 'Small text (e.g. Expert)' },
     { key: 'title', label: 'Big title' },
@@ -193,6 +199,11 @@ const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo' | 'emails'>; title: st
     { key: 'button', label: 'Form: send button' }, { key: 'sending', label: 'Form: while sending' },
     { key: 'success', label: 'Form: success message', wide: true },
     { key: 'sendAnother', label: 'Form: "send another" button' }, { key: 'privacyNote', label: 'Form: privacy note', wide: true },
+  ] },
+  { group: 'book', title: 'Book a Call (Cal.com)', fields: [
+    { key: 'navButton', label: 'Header button' }, { key: 'pill', label: 'Label pill' },
+    { key: 'heading', label: 'Heading' }, { key: 'button', label: 'Card button' },
+    { key: 'sub', label: 'Sub text', wide: true }, { key: 'orMessage', label: '"Or send a message" label' },
   ] },
   { group: 'footer', title: 'Footer', fields: [{ key: 'backToTop', label: '"Back to top" link' }] },
 ]
@@ -426,6 +437,7 @@ const TABS = [
   ['cases', 'Case studies'],
   ['projects', 'Workflows'],
   ['live', 'Live projects'],
+  ['booking', 'Booking (Cal.com)'],
   ['skills', 'Skills & tools'],
   ['testimonials', 'Testimonials'],
   ['emails', 'Emails'],
@@ -567,6 +579,18 @@ function Dashboard({ session }: { session: Session }) {
                 {data.webProjects.map((w, i) => <option key={i} value={i}>{w.title}</option>)}
               </select>
             </div>
+          </>
+        )}
+        {tab === 'booking' && (
+          <>
+            <p className="amuted" style={{ marginBottom: 14 }}>
+              Cal.com-এর মিটিং টাইপগুলো এখানে দিন। URL part = cal.com/username/<b>এই অংশ</b>। সব মুছে দিলে Book a Call অংশ লুকিয়ে যাবে।
+            </p>
+            <TextField label="Cal.com username" value={data.booking.calUser} hint="cal.com/ এর পরের অংশ, যেমন abdulalimmridha"
+              onChange={(v) => set('booking', { ...data.booking, calUser: v.trim() })} />
+            <h3 className="asub">Meeting types</h3>
+            <ListEditor items={data.booking.events} onChange={(v) => set('booking', { ...data.booking, events: v })} fields={F.bookingEvent} titleKey="title"
+              blank={{ title: 'New meeting', slug: '', duration: 30, desc: '' }} addLabel="Add meeting type" />
           </>
         )}
         {tab === 'skills' && (
