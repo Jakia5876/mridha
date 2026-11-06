@@ -258,7 +258,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   grid-column: 3; grid-row: 2; align-self: center; justify-self: end; z-index: 2;
   font-family: var(--display); text-transform: uppercase; line-height: .9;
   font-size: clamp(44px, 6vw, 110px);
-  background: linear-gradient(180deg, #3d3d3d, #171717);
+  background: linear-gradient(180deg, #a6d65a 0%, #91c743 45%, #6f9e2e 100%);
+  filter: drop-shadow(0 0 28px rgba(145,199,67,0.25));
   -webkit-background-clip: text; background-clip: text; color: transparent;
   writing-mode: horizontal-tb;
 }
