@@ -14,9 +14,52 @@ declare global { interface Window { Cal?: CalFn } }
  * Loads Cal.com's embed script once. After that, any element with
  * data-cal-link / data-cal-namespace opens the booking popup on click.
  */
+let calReady = false
+
 export function CalEmbed() {
   useEffect(() => {
-    if (window.Cal?.ns?.[NS]) return
+    // Load Cal.com only when the browser is idle (or a booking button is hovered),
+    // so it never competes with the first paint.
+    let done = false
+    const load = () => {
+      if (done) return
+      done = true
+      cleanup()
+      boot()
+    }
+    const onIntent = (e: Event) => { if ((e.target as Element | null)?.closest?.('[data-cal-link]')) load() }
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback
+    const idle = ric ? ric(load, { timeout: 2500 }) : window.setTimeout(load, 1500)
+    document.addEventListener('pointerover', onIntent, { passive: true })
+    document.addEventListener('touchstart', onIntent, { passive: true })
+    document.addEventListener('focusin', onIntent)
+
+    // Tapped before Cal.com finished loading? Open the booking page in a new tab instead.
+    const onClick = (e: MouseEvent) => {
+      const el = (e.target as Element | null)?.closest?.('[data-cal-link]')
+      if (!el || calReady) return
+      e.preventDefault()
+      e.stopPropagation()
+      window.open(`https://cal.com/${el.getAttribute('data-cal-link')}`, '_blank', 'noopener')
+    }
+    document.addEventListener('click', onClick, true)
+    function cleanup() {
+      document.removeEventListener('pointerover', onIntent)
+      document.removeEventListener('touchstart', onIntent)
+      document.removeEventListener('focusin', onIntent)
+    }
+    return () => {
+      cleanup()
+      document.removeEventListener('click', onClick, true)
+      if (!ric) window.clearTimeout(idle)
+    }
+  }, [])
+  return null
+}
+
+function boot() {
+  {
+    if (window.Cal?.ns?.[NS]) { calReady = true; return }
     /* official Cal.com loader snippet (https://cal.com/docs/developing/guides/embeds) */
     ;(function (C: Window & typeof globalThis, A: string, L: string) {
       const p = (a: { q: unknown[] }, ar: unknown) => { a.q.push(ar) }
@@ -44,6 +87,10 @@ export function CalEmbed() {
       } as unknown as CalFn)
     })(window, 'https://app.cal.com/embed/embed.js', 'init')
 
+    const tag = document.querySelector<HTMLScriptElement>('script[src*="embed/embed.js"]')
+    tag?.addEventListener('load', () => { window.setTimeout(() => { calReady = true }, 300) })
+    if (!tag) calReady = true
+
     const Cal = window.Cal!
     Cal('init', NS, { origin: 'https://app.cal.com' })
     Cal.ns[NS]('ui', {
@@ -52,8 +99,7 @@ export function CalEmbed() {
       hideEventTypeDetails: false,
       layout: 'month_view',
     })
-  }, [])
-  return null
+  }
 }
 
 /** Attributes that turn any button/link into a Cal.com popup trigger. */

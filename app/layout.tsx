@@ -3,33 +3,50 @@ import type { Metadata, Viewport } from 'next'
 import { Anton, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { getPortfolio } from '@/lib/content'
+import { SITE_URL, structuredData } from '@/lib/seo'
 
 const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--font-anton', display: 'swap' })
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
-const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono-jb', display: 'swap' })
+const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono-jb', display: 'swap', preload: false })
 
-const siteUrl = 'https://www.abdulalimmridha.top'
 /** SEO text comes from /admin → SEO (falls back to lib/portfolio-data.ts). */
 export async function generateMetadata(): Promise<Metadata> {
   const { site, profile } = await getPortfolio()
-  const { title, description, keywords, shareImage } = site.seo
+  const { title, description, keywords } = site.seo
+  // share image: app/opengraph-image.tsx (uses the /admin → SEO image when one is uploaded)
   return {
-    metadataBase: new URL(siteUrl),
-    title: `${title} | Portfolio`,
+    metadataBase: new URL(SITE_URL),
+    title: { absolute: title },
     description,
     keywords,
-    authors: [{ name: profile.fullName, url: siteUrl }],
+    applicationName: profile.fullName,
+    authors: [{ name: profile.fullName, url: SITE_URL }],
+    creator: profile.fullName,
+    publisher: profile.fullName,
+    category: 'technology',
     alternates: { canonical: '/' },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+    },
     openGraph: {
-      type: 'website',
+      type: 'profile',
       locale: 'en_US',
-      url: siteUrl,
+      url: SITE_URL,
       siteName: profile.fullName,
       title,
       description,
-      images: [{ url: shareImage || profile.photo, width: 1200, height: 630, alt: profile.fullName }],
+      firstName: profile.fullName.split(' ')[0],
+      lastName: profile.fullName.split(' ').slice(1).join(' '),
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      creator: profile.socials.X ? `@${profile.socials.X.split('/').filter(Boolean).pop()}` : undefined,
+    },
+    formatDetection: { telephone: false },
     icons: {
       icon: [
         { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
@@ -55,26 +72,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { site, profile: p } = await getPortfolio()
-  const abs = (u: string) => (u.startsWith('http') ? u : `${siteUrl}${u}`)
+  const data = await getPortfolio()
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable} ${mono.variable}`}>
       <head>
+        <link rel="preconnect" href="https://app.cal.com" crossOrigin="" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: p.fullName,
-              url: siteUrl,
-              image: abs(p.photo),
-              jobTitle: p.role,
-              description: site.seo.description,
-              email: `mailto:${p.email}`,
-              knowsAbout: ['n8n', 'GoHighLevel', 'CRM Automation', 'Vibe Coding', 'AI Agents', 'Next.js', 'Workflow Automation'],
-            }),
-          }}
+          // `<` is escaped so text from /admin can never close the script tag
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(data)).replace(/</g, '\\u003c') }}
         />
       </head>
       <body>

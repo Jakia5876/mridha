@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+import { unoptimized } from '@/lib/img'
 import { useEffect, useRef, useState } from 'react'
 import type { Meter } from '@/lib/portfolio-data'
 import { Rich } from './rich'
@@ -44,8 +46,7 @@ export function HeroStage({ name, photo, meters, tagline, status }: {
             </span>
           </div>
           <div className="phone-photo">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={photo} alt={name} />
+            <Image src={photo} unoptimized={unoptimized(photo)} alt={name} fill priority sizes="300px" />
           </div>
           <div className="phone-name">{name}</div>
           <div className="phone-role">

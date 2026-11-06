@@ -45,6 +45,10 @@ function Login() {
    ========================================================= */
 
 const F = {
+  faq: [
+    { key: 'q', label: 'Question', wide: true },
+    { key: 'a', label: 'Answer', type: 'textarea' },
+  ] as FieldSpec[],
   bookingEvent: [
     { key: 'title', label: 'Title' },
     { key: 'slug', label: 'Cal.com URL part (e.g. discovery)' },
@@ -199,6 +203,9 @@ const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo' | 'emails'>; title: st
     { key: 'button', label: 'Form: send button' }, { key: 'sending', label: 'Form: while sending' },
     { key: 'success', label: 'Form: success message', wide: true },
     { key: 'sendAnother', label: 'Form: "send another" button' }, { key: 'privacyNote', label: 'Form: privacy note', wide: true },
+  ] },
+  { group: 'faq', title: 'FAQ section', fields: [
+    { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
   ] },
   { group: 'book', title: 'Book a Call (Cal.com)', fields: [
     { key: 'navButton', label: 'Header button' }, { key: 'pill', label: 'Label pill' },
@@ -438,6 +445,7 @@ const TABS = [
   ['projects', 'Workflows'],
   ['live', 'Live projects'],
   ['booking', 'Booking (Cal.com)'],
+  ['faq', 'FAQ'],
   ['skills', 'Skills & tools'],
   ['testimonials', 'Testimonials'],
   ['emails', 'Emails'],
@@ -579,6 +587,15 @@ function Dashboard({ session }: { session: Session }) {
                 {data.webProjects.map((w, i) => <option key={i} value={i}>{w.title}</option>)}
               </select>
             </div>
+          </>
+        )}
+        {tab === 'faq' && (
+          <>
+            <p className="amuted" style={{ marginBottom: 14 }}>
+              এই প্রশ্ন-উত্তরগুলো সাইটে দেখায় আর Google / ChatGPT-এর মতো AI সার্চে আপনার সম্পর্কে উত্তর দিতে সাহায্য করে। ক্লায়েন্টরা যা জিজ্ঞেস করে সেভাবে লিখুন।
+            </p>
+            <ListEditor items={data.faqs} onChange={(v) => set('faqs', v)} fields={F.faq} titleKey="q"
+              blank={{ q: 'New question?', a: '' }} addLabel="Add question" />
           </>
         )}
         {tab === 'booking' && (

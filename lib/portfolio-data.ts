@@ -73,6 +73,7 @@ export type SiteText = {
     /** @deprecated old form fields (kept so older saved data still type-checks) */
     subject?: string; message?: string
   }
+  faq: { pill: string; heading: string }
   book: { navButton: string; pill: string; heading: string; sub: string; button: string; orMessage: string }
   footer: { backToTop: string }
   /** Contact-form emails. {name} and {subject} are replaced with the visitor's values. */
@@ -84,14 +85,14 @@ export type SiteText = {
 
 export const defaultSiteText: SiteText = {
   seo: {
-    title: 'Abdul Alim Mridha - AI Automation, GoHighLevel CRM & Vibe Coding Specialist',
+    title: 'Abdul Alim Mridha — AI Automation & GoHighLevel CRM Expert',
     description:
       'Abdul Alim Mridha builds n8n workflow automation, GoHighLevel CRM systems, AI chatbots, and modern vibe-coded websites that save businesses time and grow revenue.',
     keywords: [
       'GoHighLevel', 'GoHighLevel CRM', 'GoHighLevel automation', 'GHL expert', 'vibe coding', 'AI automation',
       'workflow automation', 'AI chatbot', 'email automation', 'SMS automation', 'Next.js website',
     ],
-    shareImage: '/alim.png',
+    shareImage: '', // empty = auto-generated card (app/opengraph-image.tsx)
   },
   nav: {
     about: 'About', services: 'Services', work: 'Works', live: 'Live Projects',
@@ -123,6 +124,7 @@ export const defaultSiteText: SiteText = {
     budgetOptions: 'Under $500, $500 – $1k, $1k – $3k, $3k – $5k, $5k+, Not sure yet',
     timelineOptions: 'ASAP, Within 2 weeks, Within 1 month, 1 – 3 months, Flexible',
   },
+  faq: { pill: 'FAQ', heading: 'Questions\n*& Answers*' },
   book: {
     navButton: 'Book a Call', pill: 'Book a Call', heading: 'Prefer to talk?',
     sub: 'Pick a time that suits you — we can meet on Google Meet or Zoom, your choice. Times show in your own timezone.',
@@ -145,6 +147,9 @@ export const defaultSiteText: SiteText = {
 export type BookingEvent = { title: string; slug: string; duration: number; desc: string }
 export type Booking = { calUser: string; events: BookingEvent[] }
 
+/** Shown on the page and as FAQPage structured data (helps Google & AI answers). */
+export type Faq = { q: string; a: string }
+
 export type Portfolio = {
   site: SiteText
   profile: Profile
@@ -157,6 +162,7 @@ export type Portfolio = {
   skills: SkillGroup[]
   testimonials: Testimonial[]
   booking: Booking
+  faqs: Faq[]
 }
 
 export const portfolioData: Portfolio = {
@@ -264,6 +270,15 @@ export const portfolioData: Portfolio = {
   ],
 
   // লাইভ ওয়েবসাইট / SaaS প্রজেক্ট (ব্রাউজার-উইন্ডো কার্ড)
+  faqs: [
+    { q: 'What does Abdul Alim Mridha do?', a: 'I build business automation: n8n workflows, GoHighLevel CRM setups (pipelines, funnels, calendars, follow-ups), AI chatbots and agents, and fast modern websites and web apps built with Next.js. The goal is always the same — take repetitive work off your team and turn more leads into customers.' },
+    { q: 'Do you work with clients outside Bangladesh?', a: 'Yes. I work remotely with clients worldwide, mostly in the USA, Canada, the UK and Europe. Calls happen on Google Meet or Zoom and my booking calendar shows times in your own timezone.' },
+    { q: 'Which tools and platforms do you use?', a: 'n8n, GoHighLevel, OpenAI / ChatGPT, Claude AI, AI agents and LLM chains, webhooks and REST APIs, Google Sheets, SMTP email, Facebook Graph API, WooCommerce and WordPress, plus Next.js, React, Tailwind CSS, Supabase and Vercel for websites and web apps.' },
+    { q: 'How much does an automation project cost?', a: 'It depends on the scope — a single workflow is a much smaller project than a complete CRM and automation system. After a free discovery call I send a clear fixed quote before any work starts, so there are no surprises.' },
+    { q: 'How long does a project take?', a: 'Small workflows are usually ready within a few days. Larger builds such as a full GoHighLevel setup or a custom web app are planned in milestones, and you get a timeline with the quote.' },
+    { q: 'How do we get started?', a: 'Book a free 15-minute discovery call, or send a message through the contact form with your project details. I usually reply within 24 hours.' },
+  ],
+
   booking: {
     calUser: 'abdulalimmridha',
     events: [

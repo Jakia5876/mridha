@@ -1,4 +1,6 @@
 import { getPortfolio } from '@/lib/content'
+import Image from 'next/image'
+import { unoptimized } from '@/lib/img'
 import { HeaderMenu } from '@/components/site/header-menu'
 import { HeroStage } from '@/components/site/hero-stage'
 import { HighlightCard } from '@/components/site/highlight-card'
@@ -25,7 +27,7 @@ function Tags({ items }: { items: string[] }) {
 }
 
 export default async function Home() {
-  const { site: t, profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials, booking } = await getPortfolio()
+  const { site: t, profile: p, highlights, tools, services, caseStudies, projects, webProjects = [], skills, testimonials, booking, faqs = [] } = await getPortfolio()
   const firstEvent = booking?.calUser && booking.events?.find((e) => e.slug)
   const bookLink = firstEvent ? `${booking.calUser}/${firstEvent.slug}` : ''
 
@@ -74,7 +76,9 @@ export default async function Home() {
 
         {/* ============ WORKFLOW WALL ============ */}
         <section className="wall" aria-label="Automation workflows">
-          <div className="wall-img" style={{ backgroundImage: `url('${t.wall.image}')` }} />
+          <div className="wall-img">
+            {t.wall.image && <Image src={t.wall.image} unoptimized={unoptimized(t.wall.image)} alt="" fill sizes="100vw" />}
+          </div>
           <div className="wall-copy">
             <span className="wall-kicker">{t.wall.kicker}</span>
             <p className="wall-title">
@@ -136,8 +140,7 @@ export default async function Home() {
             {caseStudies.map((c, i) => (
               <article className="case reveal" key={c.title} style={{ top: 90 + i * 24 }}>
                 <div className="case-media">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={c.image} alt={c.title} loading="lazy" />
+                  {c.image && <Image src={c.image} unoptimized={unoptimized(c.image)} alt={c.title} fill sizes="(max-width: 860px) 100vw, 55vw" />}
                   <span className="case-index">[{pad(i + 1)}]</span>
                 </div>
                 <div className="case-body">
@@ -167,8 +170,7 @@ export default async function Home() {
               const inner = (
                 <>
                   <div className="project-media">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={pr.image} alt={pr.title} loading="lazy" />
+                    {pr.image && <Image src={pr.image} unoptimized={unoptimized(pr.image)} alt={pr.title} fill sizes="(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw" />}
                   </div>
                   <div className="project-body">
                     <span className="idx">[{pad(i + 1)}]</span>
@@ -206,8 +208,8 @@ export default async function Home() {
                     </div>
                     <div className="site-shot">
                       {w.image && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={w.image} alt={`${w.title} screenshot`} loading="lazy" />
+                        <Image src={w.image} unoptimized={unoptimized(w.image)} alt={`${w.title} website screenshot`} fill
+                          sizes={w.featured ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw'} />
                       )}
                     </div>
                     <div className="site-body">
@@ -266,6 +268,29 @@ export default async function Home() {
             ))}
           </div>
         </section>
+
+        {/* ============ FAQ ============ */}
+        {faqs.length > 0 && (
+          <section className="section" id="faq">
+            <div className="faq-grid">
+              <div className="section-head">
+                <div className="pill reveal"><span className="pill-dot" />{t.faq.pill}</div>
+                <h2 className="display reveal"><Rich text={t.faq.heading} /></h2>
+              </div>
+              <div className="faq-list">
+                {faqs.map((f, i) => (
+                  <details className="faq reveal" key={f.q} open={i === 0}>
+                    <summary>
+                      <h3>{f.q}</h3>
+                      <span className="faq-icon" aria-hidden="true" />
+                    </summary>
+                    <p>{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ============ CONTACT ============ */}
         <section className="section contact" id="contact">
