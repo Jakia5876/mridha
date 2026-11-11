@@ -7,9 +7,17 @@ export function withDefaults(data: Partial<Portfolio> | null | undefined): Portf
   const site = Object.fromEntries(
     Object.entries(portfolioData.site).map(([k, v]) => [k, { ...v, ...((d.site as Record<string, object> | undefined)?.[k] || {}) }]),
   ) as Portfolio['site']
+  // Live projects added in code (lib/portfolio-data.ts) also show when the DB list doesn't have them yet.
+  const dbWeb = d.webProjects || []
+  const norm = (u: string) => u.trim().replace(/\/+$/, '').toLowerCase()
+  const dbUrls = new Set(dbWeb.map((w) => norm(w.url || '')))
+  const webProjects = d.webProjects
+    ? [...portfolioData.webProjects.filter((w) => !dbUrls.has(norm(w.url))), ...dbWeb]
+    : portfolioData.webProjects
   return {
     ...portfolioData,
     ...d,
+    webProjects,
     site,
     profile: {
       ...portfolioData.profile,
