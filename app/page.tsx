@@ -60,6 +60,15 @@ export default async function Home() {
             <span className="line outline" aria-hidden="true"><span>{p.lastName}</span></span>
           </h1>
 
+          <div className="hero-intro">
+            <p className="hero-role">{p.role}</p>
+            <p className="hero-lead">{p.intro}</p>
+            <div className="hero-actions">
+              <a href="#live" className="btn btn-light">{t.nav.live} <span className="arrow">↗</span></a>
+              <a href="#contact" className="btn btn-ghost">{t.nav.contact}</a>
+            </div>
+          </div>
+
           <ul className="disciplines">
             {p.disciplines.map((d, i) => (
               <li key={d} style={{ animationDelay: `${0.3 + i * 0.12}s` }}>{d}</li>

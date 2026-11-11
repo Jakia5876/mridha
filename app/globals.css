@@ -1,18 +1,21 @@
 @import 'tailwindcss';
 
-/* Portfolio design — dark cinematic theme. Accent colour: --accent */
+/* Portfolio design — clean light theme (admin panel keeps the dark tokens). Accent colour: --accent */
 /* ============ TOKENS ============ */
 :root {
-  --bg: #050505;
-  --bg-2: #0c0c0c;
-  --card: rgba(255, 255, 255, 0.03);
-  --line: rgba(255, 255, 255, 0.12);
-  --line-soft: rgba(255, 255, 255, 0.07);
-  --text: #f2f2f2;
-  --muted: #8a8a8a;
-  --dim: #3a3a3a;
-  --accent: #ff6b2c;          /* হাইলাইট কালার — চাইলে বদলান */
-  --display: var(--font-anton), "Impact", sans-serif;
+  --bg: #ffffff;
+  --bg-2: #f6f7f9;
+  --card: #ffffff;
+  --line: #e4e7ec;
+  --line-soft: #eef0f3;
+  --text: #0f172a;
+  --muted: #5b6474;
+  --dim: #c3c9d3;
+  --accent: #2563eb;          /* হাইলাইট কালার — চাইলে বদলান */
+  --accent-soft: #eff4ff;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px -12px rgba(15, 23, 42, .12);
+  --shadow-lg: 0 2px 4px rgba(15, 23, 42, .04), 0 24px 48px -20px rgba(15, 23, 42, .22);
+  --display: var(--font-display), "Segoe UI", system-ui, sans-serif;
   --body: var(--font-inter), system-ui, sans-serif;
   --mono: var(--font-mono-jb), ui-monospace, monospace;
   --pad: clamp(20px, 4vw, 56px);

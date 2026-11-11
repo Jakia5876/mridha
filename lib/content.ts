@@ -11,8 +11,15 @@ export function withDefaults(data: Partial<Portfolio> | null | undefined): Portf
   const dbWeb = d.webProjects || []
   const norm = (u: string) => u.trim().replace(/\/+$/, '').toLowerCase()
   const dbUrls = new Set(dbWeb.map((w) => norm(w.url || '')))
+  // Bundled screenshots (/projects/...) follow the code so refreshed images show up;
+  // images uploaded from /admin (stored elsewhere) still win.
+  const codeByUrl = new Map(portfolioData.webProjects.map((w) => [norm(w.url), w]))
+  const withCodeImage = dbWeb.map((w) => {
+    const code = codeByUrl.get(norm(w.url || ''))
+    return code && (!w.image || w.image.startsWith('/projects/')) ? { ...w, image: code.image } : w
+  })
   const webProjects = d.webProjects
-    ? [...portfolioData.webProjects.filter((w) => !dbUrls.has(norm(w.url))), ...dbWeb]
+    ? [...portfolioData.webProjects.filter((w) => !dbUrls.has(norm(w.url))), ...withCodeImage]
     : portfolioData.webProjects
   return {
     ...portfolioData,

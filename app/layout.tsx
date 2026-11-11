@@ -1,11 +1,12 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Anton, Inter, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import './theme-light.css'
 import { getPortfolio } from '@/lib/content'
 import { SITE_URL, structuredData } from '@/lib/seo'
 
-const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--font-anton', display: 'swap' })
+const display = Plus_Jakarta_Sans({ weight: ['500', '600', '700'], subsets: ['latin'], variable: '--font-display', display: 'swap' })
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono-jb', display: 'swap', preload: false })
 
@@ -59,8 +60,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#050505',
+  colorScheme: 'light',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -74,7 +75,7 @@ export default async function RootLayout({
 }>) {
   const data = await getPortfolio()
   return (
-    <html lang="en" className={`${anton.variable} ${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable} ${mono.variable}`}>
       <head>
         <link rel="preconnect" href="https://app.cal.com" crossOrigin="" />
         <script
