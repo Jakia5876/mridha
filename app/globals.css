@@ -663,7 +663,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .site.featured .site-shot { aspect-ratio: 16 / 8; }
 .site.featured .site-body h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 2.4vw, 36px); line-height: 1; }
 .footer .socials a { padding: 4px 12px; font-size: 12px; }
+@media (min-width: 1101px) {
+  .site.fill3-2 { grid-column: span 2; }
+  .site.fill3-3 { grid-column: span 3; }
+  .site.fill3-2 .site-shot, .site.fill3-3 .site-shot { aspect-ratio: 16 / 8; }
+}
 @media (max-width: 1100px) { .sites { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 601px) and (max-width: 1100px) {
+  .site.fill2-2 { grid-column: span 2; }
+  .site.fill2-2 .site-shot { aspect-ratio: 16 / 8; }
+}
 @media (max-width: 600px) { .sites { grid-template-columns: 1fr; } .site.featured { grid-column: auto; } .site.featured .site-shot { aspect-ratio: 16 / 10; } }
 .af select { width: 100%; font: inherit; font-size: 15px; color: var(--text); background: #0f0f0f; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; outline: none; }
 

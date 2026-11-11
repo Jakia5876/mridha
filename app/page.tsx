@@ -31,6 +31,16 @@ export default async function Home() {
   const firstEvent = booking?.calUser && booking.events?.find((e) => e.slug)
   const bookLink = firstEvent ? `${booking.calUser}/${firstEvent.slug}` : ''
 
+  // Live projects grid: the wide "featured" card goes first, and the last card stretches
+  // to fill its row, so the grid never shows empty slots (3 columns desktop, 2 on tablet).
+  const sites = [...webProjects.filter((w) => w.featured), ...webProjects.filter((w) => !w.featured)]
+  const siteCells = sites.length + (sites.some((w) => w.featured) ? 1 : 0)
+  const lastIsFeatured = !!sites[sites.length - 1]?.featured
+  const siteFill = lastIsFeatured ? '' : [
+    siteCells % 3 === 2 ? ' fill3-2' : siteCells % 3 === 1 ? ' fill3-3' : '',
+    siteCells % 2 === 1 ? ' fill2-2' : '',
+  ].join('')
+
   return (
     <>
       <div className="cursor-glow" aria-hidden="true" />
@@ -190,18 +200,19 @@ export default async function Home() {
         </section>
 
         {/* ============ LIVE PROJECTS ============ */}
-        {webProjects.length > 0 && (
+        {sites.length > 0 && (
           <section className="section" id="live">
             <div className="section-head">
               <div className="pill reveal"><span className="pill-dot" />{t.live.pill}</div>
               <h2 className="display reveal"><Rich text={t.live.heading} /></h2>
             </div>
             <div className="sites">
-              {webProjects.map((w, i) => {
+              {sites.map((w, i) => {
                 let host = w.url
                 try { host = new URL(w.url).host } catch {}
+                const fill = i === sites.length - 1 ? siteFill : ''
                 return (
-                  <a className={`site reveal${w.featured ? ' featured' : ''}`} key={w.url || w.title} href={w.url} target="_blank" rel="noopener noreferrer">
+                  <a className={`site reveal${w.featured ? ' featured' : ''}${fill}`} key={w.url || w.title} href={w.url} target="_blank" rel="noopener noreferrer">
                     <div className="site-bar">
                       <span className="site-dots"><i /><i /><i /></span>
                       <span className="site-url">{host}</span>
