@@ -36,7 +36,16 @@ body { font-size: 16px; line-height: 1.65; color: var(--text); }
 
 /* header */
 .header.scrolled { background: rgba(255,255,255,.85); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line); }
-.logo { color: var(--text); font-weight: 600; letter-spacing: .14em; }
+/* brand name: lime badge with bold dark text (lime alone is too light to read on white) */
+.logo {
+  --brand: #7cd60e;
+  display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 999px;
+  background: var(--brand); color: #0f172a;
+  font-family: var(--display); font-weight: 800; font-size: 14px; letter-spacing: .08em;
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 8px 20px -10px rgba(124,214,14,.9);
+  transition: transform .3s var(--ease), box-shadow .3s;
+}
+.logo:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 12px 26px -10px rgba(124,214,14,1); }
 .topnav, .header-actions .btn { box-shadow: none; }
 .topnav { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
 .topnav a { color: var(--muted); font-weight: 500; }
