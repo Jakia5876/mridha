@@ -207,3 +207,34 @@ body { font-size: 16px; line-height: 1.65; color: var(--text); }
 
 .footer { background: var(--bg-2); border-color: var(--line); color: var(--muted); }
 .footer > span:first-child { color: var(--text); font-weight: 600; }
+
+/* ---------- Responsive polish (mobile / tablet / laptop) ---------- */
+
+/* Jumping to a section from the menu: keep its title clear of the fixed header */
+html { scroll-padding-top: 96px; }
+@media (max-width: 919px) { html { scroll-padding-top: 76px; } }
+
+/* Brand badge always stays on one line */
+.logo { white-space: nowrap; flex-shrink: 0; }
+
+/* Phones: tighter header so name badge + Book a Call fit side by side */
+@media (max-width: 480px) {
+  .header { gap: 10px; }
+  .logo { height: 36px; padding: 0 12px; font-size: 12px; letter-spacing: .04em; }
+  .header-actions .btn { padding: 0 12px; font-size: 12.5px; gap: 6px; }
+}
+/* Very small phones (≤360px): drop the calendar icon to save space */
+@media (max-width: 360px) {
+  .header-book svg { display: none; }
+  .logo { font-size: 11px; padding: 0 10px; }
+}
+
+/* Slider dots: same look, bigger invisible touch area for fingers */
+.award-dots button { position: relative; }
+.award-dots button::before { content: ''; position: absolute; inset: -14px -6px; }
+
+/* Mobile menu & footer links: comfortable tap height */
+@media (max-width: 919px) {
+  .menu-list a { padding-block: 6px; }
+  .menu-foot a, footer a { min-height: 40px; display: inline-flex; align-items: center; }
+}
