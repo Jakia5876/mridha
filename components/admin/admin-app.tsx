@@ -580,7 +580,12 @@ function Dashboard({ session }: { session: Session }) {
         {tab === 'live' && (
           <>
             <p className="amuted" style={{ marginBottom: 14 }}>↑↓ দিয়ে ক্রম বদলান। কোনো একটা প্রজেক্ট বড় করে দেখাতে নিচে &quot;Featured&quot; থেকে বেছে নিন।</p>
-            <ListEditor items={data.webProjects} onChange={(v) => set('webProjects', v)} fields={F.webProject} titleKey="title"
+            <ListEditor items={data.webProjects} onChange={(v) => {
+                // remember deleted URLs so the code defaults don't bring them back
+                const gone = data.webProjects.filter((w) => w.url && !v.some((x) => x.url === w.url)).map((w) => w.url)
+                if (gone.length) set('removedProjectUrls', Array.from(new Set([...(data.removedProjectUrls || []), ...gone])))
+                set('webProjects', v)
+              }} fields={F.webProject} titleKey="title"
               blank={{ title: 'New website', category: 'Website', desc: '', url: 'https://', image: '', tags: [], featured: false }} addLabel="Add live project" />
             <div className="af" style={{ marginTop: 18 }}>
               <label>Featured (big card)</label>

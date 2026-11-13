@@ -173,6 +173,8 @@ export type Portfolio = {
   skills: SkillGroup[]
   testimonials: Testimonial[]
   booking: Booking
+  /** live-project URLs deleted in /admin — keeps code defaults from coming back */
+  removedProjectUrls?: string[]
   faqs: Faq[]
 }
 
@@ -312,7 +314,6 @@ export const portfolioData: Portfolio = {
     { title: 'Nexora Beauty Salon', category: 'Website', url: 'https://nexora-beauty-salon-teal.vercel.app/', image: '/projects/nexora-beauty-salon.jpg', tags: ['Business', 'Beauty'], desc: 'Luxury salon website showcasing bridal styling, skincare, hydra-glow facials and makeup artistry.' },
     { title: 'Nexora Law Firm', category: 'Website', url: 'https://nexora-case-manager.vercel.app/', image: '/projects/nexora-law-firm.jpg', tags: ['Business', 'Legal'], desc: 'Law firm website for corporate litigation, cross-border M&A, intellectual property and trial defense.' },
     { title: 'Doctors Medicin Corner', category: 'E-commerce', url: 'https://doctorsmedicinconner.vercel.app/', image: '/projects/doctors-medicin-corner.jpg', tags: ['Pharmacy', 'Healthcare'], desc: 'Online pharmacy for genuine medicines and healthcare products — search, prescription upload, order tracking and fast delivery.' },
-    { title: 'Natural Plate', category: 'E-commerce', url: 'https://natural-platenew.vercel.app/', image: '/projects/natural-plate-v2.jpg', tags: ['Organic', 'Cash on Delivery'], desc: 'Organic food store — fresh vegetables, fruits, grains and eco-friendly areca leaf plates, delivered to your door.' },
     { title: 'Kashor Bidda Niketon', category: 'Website', url: 'https://kashor-bidda-niketon.vercel.app/', image: '/projects/kashor-bidda-niketon.jpg', tags: ['School', 'Bangla'], desc: 'School website (Play group to Class 10) — curriculum, teachers, gallery, notices and admissions, fully in Bangla.' },
   ],
 

@@ -18,8 +18,18 @@ export function withDefaults(data: Partial<Portfolio> | null | undefined): Portf
     const code = codeByUrl.get(norm(w.url || ''))
     return code && (!w.image || w.image.startsWith('/projects/')) ? { ...w, image: code.image } : w
   })
+  // Same URL listed twice → keep one card (at the first position), with an uploaded image if either has one.
+  const uploaded = (img?: string) => !!img && !img.startsWith('/')
+  const merged: typeof withCodeImage = []
+  for (const w of withCodeImage) {
+    const i = merged.findIndex((m) => norm(m.url || '') === norm(w.url || ''))
+    if (i < 0) merged.push(w)
+    else if (!uploaded(merged[i].image) && uploaded(w.image)) merged[i] = { ...merged[i], image: w.image }
+  }
+  // Projects deleted in /admin stay deleted even if they are still in the code defaults.
+  const removed = new Set((d.removedProjectUrls || []).map(norm))
   const webProjects = d.webProjects
-    ? [...portfolioData.webProjects.filter((w) => !dbUrls.has(norm(w.url))), ...withCodeImage]
+    ? [...portfolioData.webProjects.filter((w) => !dbUrls.has(norm(w.url)) && !removed.has(norm(w.url))), ...merged]
     : portfolioData.webProjects
   return {
     ...portfolioData,
