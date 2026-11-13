@@ -50,7 +50,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes grain { 0%,100% { transform: translate(0,0) } 30% { transform: translate(-3%,2%) } 60% { transform: translate(2%,-3%) } }
 .cursor-glow {
   position: fixed; width: 520px; height: 520px; left: 0; top: 0; z-index: 0; pointer-events: none;
-  border-radius: 50%; transform: translate(-50%, -50%);
+  border-radius: 50%; transform: translate3d(-600px, -600px, 0); will-change: transform;
   background: radial-gradient(circle, rgba(255,255,255,0.05), transparent 60%);
 }
 
@@ -868,3 +868,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .site-shot.contain img { object-fit: contain; object-position: center; filter: none; }
 .site-shot.contain .site-shot-bg { object-fit: cover; filter: blur(22px) saturate(1.2) brightness(.55); transform: scale(1.2); }
 .site:hover .site-shot.contain .site-shot-bg { transform: scale(1.2); filter: blur(22px) saturate(1.2) brightness(.55); }
+
+/* ============ PERFORMANCE (mobile first) ============ */
+/* film grain: one screen-sized static layer instead of a 4x-screen animated one */
+.grain { inset: 0; animation: none; }
+/* faster, lighter entrance animations so content shows sooner */
+.reveal { transform: translateY(24px); transition-duration: .7s; }
+.hero-name .line > span { animation-duration: .8s; }
+.disciplines li { animation-duration: .6s; }
+/* skip layout/paint of sections until they are near the screen */
+main > .section:not(:first-of-type), .footer { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+/* phones & tablets: drop purely decorative, GPU-heavy effects */
+@media (max-width: 860px), (pointer: coarse) {
+  .grain, .cursor-glow, .pedestal::before { display: none; }
+  .spotlight::after, .phone-glow { animation: none; }
+  .hero-word { filter: none; }
+  .header.scrolled, .menu, .btn-ghost, .award-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .header.scrolled { background: rgba(5,5,5,0.92); }
+  .site-shot.contain .site-shot-bg, .site:hover .site-shot.contain .site-shot-bg { filter: blur(12px) brightness(.55); }
+}
