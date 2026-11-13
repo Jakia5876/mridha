@@ -80,13 +80,25 @@ export function UploadField({ label, value, onChange, accept = 'image/*', previe
     finally { setBusy(false) }
   }
 
+  const [over, setOver] = useState(false)
+
   return (
     <div className="af">
       <label htmlFor={id}>{label}</label>
-      <div className="af-upload">
+      <div
+        className={`af-upload${over ? ' af-drop' : ''}`}
+        onDragOver={(e) => { e.preventDefault(); setOver(true) }}
+        onDragLeave={() => setOver(false)}
+        onDrop={(e) => { e.preventDefault(); setOver(false); onFile(e.dataTransfer.files?.[0]) }}
+      >
         {preview && value && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={value} alt="" />
+          // click the picture (or drop a file on it) to replace it
+          <label className="af-thumb" title="ছবি বদলাতে ক্লিক করুন">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={value} alt="" />
+            <span>{busy ? '…' : 'Change'}</span>
+            <input type="file" accept={accept} hidden disabled={busy} onChange={(e) => { onFile(e.target.files?.[0]); e.target.value = '' }} />
+          </label>
         )}
         <div className="af-upload-col">
           <input id={id} value={value ?? ''} placeholder="https://… বা /ছবি.jpg" onChange={(e) => onChange(e.target.value)} />
