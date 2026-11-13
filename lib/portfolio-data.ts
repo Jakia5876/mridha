@@ -27,6 +27,8 @@ export type WebProject = {
   image: string
   tags: string[]
   featured?: boolean // বড় করে দেখাবে
+  /** cover = fill the card (website screenshots) · contain = show the whole image (banners/posters). Empty = auto. */
+  fit?: 'cover' | 'contain' | ''
 }
 export type SkillGroup = { group: string; items: string[] }
 export type Testimonial = { quote: string; name: string; company: string }

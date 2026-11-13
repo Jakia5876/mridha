@@ -220,16 +220,21 @@ export default async function Home() {
                 let host = w.url
                 try { host = new URL(w.url).host } catch {}
                 const fill = i === sites.length - 1 ? siteFill : ''
+                // uploaded banners/posters show whole; local website screenshots fill the card
+                const contain = w.fit ? w.fit === 'contain' : !!w.image && !w.image.startsWith('/')
                 return (
                   <a className={`site reveal${w.featured ? ' featured' : ''}${fill}`} key={w.url || w.title} href={w.url} target="_blank" rel="noopener noreferrer">
                     <div className="site-bar">
                       <span className="site-dots"><i /><i /><i /></span>
                       <span className="site-url">{host}</span>
                     </div>
-                    <div className="site-shot">
+                    <div className={`site-shot${contain ? ' contain' : ''}`}>
+                      {w.image && contain && (
+                        <Image src={w.image} unoptimized={unoptimized(w.image)} alt="" aria-hidden fill sizes="200px" className="site-shot-bg" />
+                      )}
                       {w.image && (
                         <Image src={w.image} unoptimized={unoptimized(w.image)} alt={`${w.title} website screenshot`} fill
-                          sizes={w.featured ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw'} />
+                          sizes={w.featured || fill ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw'} />
                       )}
                     </div>
                     <div className="site-body">

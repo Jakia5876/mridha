@@ -86,6 +86,7 @@ const F = {
     { key: 'category', label: 'Category (SaaS / Website / Web App)' },
     { key: 'url', label: 'Live URL', type: 'url', wide: true },
     { key: 'image', label: 'Screenshot', type: 'image' },
+    { key: 'fit', label: 'Image fit: cover / contain', hint: 'contain = পুরো ছবি দেখাবে (ব্যানার/পোস্টার) · cover = কার্ড ভরে যাবে (ওয়েবসাইটের স্ক্রিনশট) · খালি = নিজে থেকে' },
     { key: 'desc', label: 'Description', type: 'textarea' },
     { key: 'tags', label: 'Tags', type: 'tags', wide: true },
   ],

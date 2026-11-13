@@ -863,3 +863,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .af-thumb:hover span, .af-thumb:focus-within span { opacity: 1; }
 .af-upload.af-drop { outline: 2px dashed #8cc4ff; outline-offset: 6px; border-radius: 10px; }
+
+/* live projects: banner/poster images shown whole, gaps filled with a blurred copy */
+.site-shot.contain img { object-fit: contain; object-position: center; filter: none; }
+.site-shot.contain .site-shot-bg { object-fit: cover; filter: blur(22px) saturate(1.2) brightness(.55); transform: scale(1.2); }
+.site:hover .site-shot.contain .site-shot-bg { transform: scale(1.2); filter: blur(22px) saturate(1.2) brightness(.55); }
