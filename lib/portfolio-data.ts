@@ -76,6 +76,8 @@ export type SiteText = {
     subject?: string; message?: string
   }
   faq: { pill: string; heading: string }
+  /** floating Messenger / Call / WhatsApp button */
+  widget: { heading: string; close: string; chatTitle: string; chatSub: string; callTitle: string; callSub: string; waTitle: string; waSub: string; waPrefill: string }
   book: { navButton: string; pill: string; heading: string; sub: string; button: string; orMessage: string }
   footer: { backToTop: string }
   /** Contact-form emails. {name} and {subject} are replaced with the visitor's values. */
@@ -127,6 +129,13 @@ export const defaultSiteText: SiteText = {
     timelineOptions: 'ASAP, Within 2 weeks, Within 1 month, 1 – 3 months, Flexible',
   },
   faq: { pill: 'FAQ', heading: 'Questions\n*& Answers*' },
+  widget: {
+    heading: 'Get in touch', close: 'Close',
+    chatTitle: 'Chat on Messenger', chatSub: 'Get a quick reply',
+    callTitle: 'Call me', callSub: '',
+    waTitle: 'Message on WhatsApp', waSub: 'Usually replies fast',
+    waPrefill: 'Hi Abdul, I found your portfolio and would like to discuss a project.',
+  },
   book: {
     navButton: 'Book a Call', pill: 'Book a Call', heading: 'Prefer to talk?',
     sub: 'Pick a time that suits you — we can meet on Google Meet or Zoom, your choice. Times show in your own timezone.',

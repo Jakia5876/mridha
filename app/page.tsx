@@ -9,6 +9,7 @@ import { ContactForm } from '@/components/site/contact-form'
 import { Socials } from '@/components/site/socials'
 import { Rich } from '@/components/site/rich'
 import { BookingCards, CalEmbed } from '@/components/site/booking'
+import { ContactWidget } from '@/components/site/contact-widget'
 
 // Re-check Supabase for new content at most every 5 minutes
 // (saving in /admin refreshes the page immediately).
@@ -48,6 +49,7 @@ export default async function Home() {
       <Effects />
       <HeaderMenu name={p.fullName} email={p.email} socials={p.socials} nav={t.nav} book={bookLink ? { link: bookLink, label: t.book.navButton } : undefined} />
       {bookLink && <CalEmbed />}
+      <ContactWidget phone={p.phone} facebook={p.socials.Facebook} text={t.widget} />
 
       <main id="top">
         {/* ============ HERO ============ */}

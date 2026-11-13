@@ -205,6 +205,13 @@ const TEXT_GROUPS: { group: Exclude<keyof SiteText, 'seo' | 'emails'>; title: st
     { key: 'success', label: 'Form: success message', wide: true },
     { key: 'sendAnother', label: 'Form: "send another" button' }, { key: 'privacyNote', label: 'Form: privacy note', wide: true },
   ] },
+  { group: 'widget', title: 'Floating contact button (Messenger / Call / WhatsApp)', fields: [
+    { key: 'heading', label: 'Panel title' }, { key: 'close', label: '"Close" label' },
+    { key: 'chatTitle', label: 'Messenger: title' }, { key: 'chatSub', label: 'Messenger: small text' },
+    { key: 'callTitle', label: 'Call: title' }, { key: 'callSub', label: 'Call: small text', hint: 'খালি রাখলে ফোন নম্বর দেখাবে' },
+    { key: 'waTitle', label: 'WhatsApp: title' }, { key: 'waSub', label: 'WhatsApp: small text' },
+    { key: 'waPrefill', label: 'WhatsApp: ready-made first message', wide: true },
+  ] },
   { group: 'faq', title: 'FAQ section', fields: [
     { key: 'pill', label: 'Label pill' }, { key: 'heading', label: 'Heading', type: 'textarea', hint: H },
   ] },
