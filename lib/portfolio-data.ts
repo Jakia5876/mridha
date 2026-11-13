@@ -179,7 +179,7 @@ export const portfolioData: Portfolio = {
     about:
       'I design automation systems that quietly do the repetitive work — connecting apps, nurturing leads, answering customers and publishing content — so business owners can focus on growth. From n8n workflows and GoHighLevel CRM builds to AI agents and modern websites built with Claude Code and Next.js, every system I deliver is reliable, documented and easy to hand off.',
     photo: '/alim.png',
-    email: 'alim01716779220@gmail.com',
+    email: 'hello@abdulalimmridha.top',
     phone: '+880 1716779220',
     location: 'Bangladesh · Working worldwide',
     resume: '', // CV-র লিংক, যেমন "/cv.pdf" (ফাইলটা public/ ফোল্ডারে রাখুন)

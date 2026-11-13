@@ -95,7 +95,7 @@ export function sendVisitorConfirmation(v: Submission, t: SiteText['emails']) {
   return send({
     from: `${oneLine(t.fromName, 60) || 'Portfolio'} <${FROM_ADDRESS}>`,
     to: v.email,
-    reply_to: t.notifyTo,
+    reply_to: FROM_ADDRESS, // public domain address (Cloudflare routes it to Gmail) — keeps the private Gmail hidden
     subject: oneLine(fill(t.confirmSubject, v)),
     html,
     text: `${heading}\n\n${body}\n\n${t.signature}\n${SITE}`,
