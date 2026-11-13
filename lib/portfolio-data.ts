@@ -291,6 +291,7 @@ export const portfolioData: Portfolio = {
   },
 
   webProjects: [
+    { title: 'Natural Plate — Areca Leaf Store', category: 'E-commerce', url: 'https://natural-plate.flixbangla.workers.dev/', image: '/projects/natural-plate-areca.jpg', tags: ['Bangla', 'Eco-friendly', 'Cash on Delivery', 'Cloudflare Workers'], desc: 'Bangla online store for 100% natural, plastic-free areca leaf plates, bowls and trays — categories, search, wishlist, cart, order tracking, bulk-order deals and cash on delivery across Bangladesh.' },
     { title: 'Nari Kotha', category: 'Health Portal', url: 'https://www.narikotha.online/', image: '/projects/nari-kotha-banner.jpg', tags: ['Bangla', 'Women\'s Health', 'Cloudflare Pages'], desc: 'Bangla women\'s health portal — hormones & PCOS, breast health, mother & child, menstruation and menopause, explained in simple language from reliable sources, with fresh articles every day.' },
     { title: 'Nexora Wholesale', category: 'B2B E-commerce', url: 'https://nexora-whole-sale.vercel.app/', image: '/projects/nexora-wholesale.jpg', tags: ['B2B', 'Volume Pricing', 'Quotes'], desc: 'B2B wholesale catalog for retailers and distributors — tiered volume pricing on every SKU, custom quote requests and trade accounts.' },
     { title: 'Wasend-Pro', category: 'SaaS', featured: true, url: 'https://wasend-pro.vercel.app/', image: '/projects/wasend-pro-v2.jpg', tags: ['SaaS', 'Admin Panel'], desc: 'A SaaS platform with a secure admin panel and account management — built and deployed end-to-end.' },
