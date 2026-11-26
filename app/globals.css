@@ -889,7 +889,9 @@ main > .section:not(:first-of-type), .footer { content-visibility: auto; contain
 }
 
 /* ============ FLOATING CONTACT (Messenger / Call / WhatsApp) ============ */
-.cw { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.cw { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; pointer-events: none; }
+/* the wrapper box must not block clicks on the page; only the button and the open panel are clickable */
+.cw-toggle, .cw.open .cw-panel { pointer-events: auto; }
 .cw-toggle {
   position: relative; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; color: #fff;
   background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: grid; place-items: center;
